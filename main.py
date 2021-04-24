@@ -9,7 +9,7 @@ import psutil
 champion_ban = "trundle"
 champion_pick_1 = "master"
 champion_pick_2 = "warwick"
-img_path = "C:\\Users\\trevo\\Documents\\delank\\delank\\images\\"
+img_path = "C:\\Users\\Trevor\\Documents\\delank\\images\\"
 
 color_pixels = {
     "ban": {
@@ -33,6 +33,11 @@ pos = {
     "demoted_message_button": {
         'x': 654,
         'y': 371,
+        'img': "leave_buster_warings.png"
+    },
+    "verify_email_exit": {
+        'x': 840,
+        'y': 125,
         'img': "leave_buster_warings.png"
     },
     'play_button': {
@@ -131,15 +136,20 @@ while True:
     open_league_client()
     time.sleep(35)
     
+    mouse.move(pos["verify_email_exit"]["x"], pos["verify_email_exit"]["y"])
+    time.sleep(1)
+    mouse.click()
+    time.sleep(4)
+    
     mouse.move(pos["leave_buster_warning_button"]["x"], pos["leave_buster_warning_button"]["y"])
     time.sleep(1)
     mouse.click()
-    time.sleep(8)
+    time.sleep(6)
 
     mouse.move(pos["demoted_message_button"]["x"], pos["demoted_message_button"]["y"])
     time.sleep(1)
     mouse.click()
-    time.sleep(8)
+    time.sleep(6)
    
     mouse.move(pos["play_button"]["x"], pos["play_button"]["y"])
     time.sleep(1)
@@ -187,18 +197,33 @@ while True:
     
     time.sleep(3)
 
+    cur_time = 0
     while not img_screen_pixel_compare(img_path + color_pixels["ban"]["img"], color_pixels["ban"]["x"], color_pixels["ban"]["y"]):
         mouse.move(pos["accept_match"]["x"], pos["accept_match"]["y"])
         time.sleep(1)
         mouse.click()
         print("waiting for ban phase")
+        
+        if cur_time > 60*30:
+            break
+        else:
+            cur_time += 1
+            
     print("ban phase DETECTED")
+    
+    cur_time = 0
     while not img_screen_pixel_compare(img_path + color_pixels["pick"]["img"], color_pixels["pick"]["x"], color_pixels["pick"]["y"]):
         time.sleep(1)
         print("waiting for pick phase")
+        
+        if cur_time > 60*3:
+            break
+        else:
+            cur_time += 1
     
     print("pick phase DETECTED")
     
+    cur_time = 0
     mouse.move(pos["pick_champ_search"]["x"], pos["pick_champ_search"]["y"])
     time.sleep(1)
     mouse.click()
@@ -219,7 +244,12 @@ while True:
     while not is_league_game_running():
         time.sleep(1)
         print("waiting on league game to start")
-
+        
+        if cur_time > 60*3:
+            break
+        else:
+            cur_time += 1
+    cur_time = 0
     force_close_league()
     time.sleep(60*10)  
         
