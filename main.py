@@ -1,4 +1,3 @@
-import psutil
 import subprocess
 import time
 import mouse
@@ -6,11 +5,11 @@ import keyboard
 
 from PIL import Image
 from PIL import ImageGrab
-
+import psutil
 champion_ban = "trundle"
 champion_pick_1 = "master"
 champion_pick_2 = "warwick"
-img_path = "C:\Users\Trevor\Documents\delank\images\"
+img_path = "C:\\Users\\trevo\\Documents\\delank\\delank\\images\\"
 
 color_pixels = {
     "ban": {
@@ -31,6 +30,11 @@ pos = {
         'img': "leave_buster_warnings.png"
     },
     
+    "demoted_message_button": {
+        'x': 654,
+        'y': 371,
+        'img': "leave_buster_warings.png"
+    },
     'play_button': {
         'x': 276, 
         'y': 89, 
@@ -45,6 +49,11 @@ pos = {
     "confirm_play_button": {
         "x": 560,
         "y": 606,   
+    },
+    "accept_match": {
+        "x": 640,
+        "y": 524,
+        "img": "match_found.png"
     },
     "role_1_pos": {
         "x": 510,
@@ -77,7 +86,8 @@ def img_screen_pixel_compare(img_path, x, y):
     img_rgb = im.convert("RGB")
     image_pixel = img_rgb.getpixel((x, y))
     
-    if screenshot_pixel[0] == image_pixel[0] and screenshot_pixel[1] == image_pixel[1] and screenshot_pixel[2] == image_pixel[2]:
+    total_pixel_diff = abs(screenshot_pixel[0] - image_pixel[0]) + abs(screenshot_pixel[1] - image_pixel[1]) + abs(screenshot_pixel[2] - image_pixel[2])
+    if total_pixel_diff < 10:
         return True
     
     else:
@@ -100,30 +110,36 @@ def force_close_league():
             print("access denied")
     
 def is_league_game_running():
-    for proc in psutil.process_iter():  
+    for proc in psutil.process_iter():
         try:
-            if proc.name() == "League of Legends.exe":
+            if proc.name().lower() == "League of Legends.exe".lower():
                 return True
         except psutil.AccessDenied:
             pass
-        return False
+    return False
         
         
 def open_league_client():
-    subprocess.Popen(r'"C:\Riot Games\Riot Client\RiotClientServices.exe" --launch-product=league_of_legends --launch-patchline=live')
+    subprocess.Popen(r'"C:\\Riot Games\\Riot Client\\RiotClientServices.exe" --launch-product=league_of_legends --launch-patchline=live')
 
 
 while True:
+    
     force_close_league()
-    time.sleep(25)
+    time.sleep(15)
     
     open_league_client()
-    time.sleep(45)
+    time.sleep(35)
     
     mouse.move(pos["leave_buster_warning_button"]["x"], pos["leave_buster_warning_button"]["y"])
     time.sleep(1)
     mouse.click()
-    time.sleep(10)
+    time.sleep(8)
+
+    mouse.move(pos["demoted_message_button"]["x"], pos["demoted_message_button"]["y"])
+    time.sleep(1)
+    mouse.click()
+    time.sleep(8)
    
     mouse.move(pos["play_button"]["x"], pos["play_button"]["y"])
     time.sleep(1)
@@ -167,10 +183,14 @@ while True:
     mouse.click()
     
     
-    time.sleep(60*60*20)
+    #time.sleep(60*20)
     
+    time.sleep(3)
+
     while not img_screen_pixel_compare(img_path + color_pixels["ban"]["img"], color_pixels["ban"]["x"], color_pixels["ban"]["y"]):
+        mouse.move(pos["accept_match"]["x"], pos["accept_match"]["y"])
         time.sleep(1)
+        mouse.click()
         print("waiting for ban phase")
     print("ban phase DETECTED")
     while not img_screen_pixel_compare(img_path + color_pixels["pick"]["img"], color_pixels["pick"]["x"], color_pixels["pick"]["y"]):
@@ -196,10 +216,12 @@ while True:
     time.sleep(1)
     mouse.click()
     
-    
     while not is_league_game_running():
+        time.sleep(1)
         print("waiting on league game to start")
-        
+
+    force_close_league()
+    time.sleep(60*10)  
         
     
     
