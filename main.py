@@ -6,6 +6,8 @@ import keyboard
 from PIL import Image
 from PIL import ImageGrab
 import psutil
+
+
 champion_ban = "trundle"
 champion_pick_1 = "master"
 champion_pick_2 = "warwick"
@@ -22,6 +24,34 @@ color_pixels = {
         'y': 64,
         'img': 'pick_champ.png'
     }
+}
+
+role_pos = {
+     "top": {
+        "x": 432,
+        "y": 441,
+        "img": "roles_selected_ready.png"
+    },
+    "jg": {
+        "x": 445,
+        "y": 386,
+        "img": "roles_selected_ready.png"
+    },
+    "mid": {
+        "x": 511,
+        "y": 360,
+        "img": "roles_selected_ready.png"
+    },
+     "adc": {
+        "x": 567,
+        "y": 384,
+        "img": "roles_selected_ready.png"
+    },
+    "sup": {
+        "x": 591,
+        "y": 360,
+        "img": "roles_selected_ready.png"
+    },
 }
 pos = {
     "leave_buster_warning_button": {
@@ -128,11 +158,7 @@ def open_league_client():
     subprocess.Popen(r'"C:\\Riot Games\\Riot Client\\RiotClientServices.exe" --launch-product=league_of_legends --launch-patchline=live')
 
 
-while True:
-    
-    force_close_league()
-    time.sleep(15)
-    
+def Start_Accept_League_client():
     open_league_client()
     time.sleep(35)
     
@@ -150,7 +176,9 @@ while True:
     time.sleep(1)
     mouse.click()
     time.sleep(6)
-   
+
+def Start_Matchmaking(role_1: str, role_2: str):
+    
     mouse.move(pos["play_button"]["x"], pos["play_button"]["y"])
     time.sleep(1)
     mouse.click()
@@ -191,12 +219,8 @@ while True:
     mouse.move(pos["find_match_button"]["x"], pos["find_match_button"]["y"])
     time.sleep(1)
     mouse.click()
-    
-    
-    #time.sleep(60*20)
-    
-    time.sleep(3)
 
+def accept_matches_until_ban_phase():
     cur_time = 0
     while not img_screen_pixel_compare(img_path + color_pixels["ban"]["img"], color_pixels["ban"]["x"], color_pixels["ban"]["y"]):
         mouse.move(pos["accept_match"]["x"], pos["accept_match"]["y"])
@@ -210,7 +234,8 @@ while True:
             cur_time += 1
             
     print("ban phase DETECTED")
-    
+
+def detect_pick_phase():
     cur_time = 0
     while not img_screen_pixel_compare(img_path + color_pixels["pick"]["img"], color_pixels["pick"]["x"], color_pixels["pick"]["y"]):
         time.sleep(1)
@@ -222,14 +247,14 @@ while True:
             cur_time += 1
     
     print("pick phase DETECTED")
-    
-    cur_time = 0
+
+def select_champ(option_1, option_2):
     mouse.move(pos["pick_champ_search"]["x"], pos["pick_champ_search"]["y"])
     time.sleep(1)
     mouse.click()
     time.sleep(2)
     
-    keyboard.write("Master")
+    keyboard.write(option_1)
     time.sleep(2)
     mouse.move(pos["champ_search_1"]["x"], pos["champ_search_1"]["y"])
     time.sleep(1)
@@ -240,19 +265,46 @@ while True:
     mouse.move(pos["lock_in"]["x"], pos["lock_in"]["y"])
     time.sleep(1)
     mouse.click()
+
+def detect_league_game_start():
     
+    cur_time = 0
     while not is_league_game_running():
         time.sleep(1)
-        print("waiting on league game to start")
-        
+    
         if cur_time > 60*3:
             break
         else:
             cur_time += 1
-    cur_time = 0
+    print("league game exe started")
+
+print("starting in 3 seconds...")
+
+time.sleep(3)
+while True:
     force_close_league()
+    time.sleep(15)
+    
+    Start_Accept_League_client()
+ 
+    
+    #time.sleep(60*20)
+    
+    time.sleep(3)
+
+    
+    accept_matches_until_ban_phase()
+    
+    detect_pick_phase()
+    
+    select_champ("master", "warwick")
+    
+    detect_league_game_start()
+    force_close_league()
+    
+    
     time.sleep(60*10)  
-        
+    #detect when match has ended by pooling opgg    
     
     
     
