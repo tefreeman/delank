@@ -118,7 +118,7 @@ pos = {
 
 }
 
-def img_screen_pixel_compare(img_path, x, y):   
+def img_screen_pixel_compare(img_path, x, y, max_diff):   
     screenshot = ImageGrab.grab()
     screenshot_rgb: Image = screenshot.convert("RGB")
     screenshot_pixel = screenshot_rgb.getpixel((x,y))
@@ -128,7 +128,7 @@ def img_screen_pixel_compare(img_path, x, y):
     image_pixel = img_rgb.getpixel((x, y))
     
     total_pixel_diff = abs(screenshot_pixel[0] - image_pixel[0]) + abs(screenshot_pixel[1] - image_pixel[1]) + abs(screenshot_pixel[2] - image_pixel[2])
-    if total_pixel_diff < 10:
+    if total_pixel_diff < max_diff:
         return True
     
     else:
@@ -228,7 +228,7 @@ def Start_Matchmaking(role_1: str, role_2: str):
 
 def accept_matches_until_ban_phase():
     cur_time = 0
-    while not img_screen_pixel_compare(img_path + color_pixels["ban"]["img"], color_pixels["ban"]["x"], color_pixels["ban"]["y"]):
+    while not img_screen_pixel_compare(img_path + color_pixels["ban"]["img"], color_pixels["ban"]["x"], color_pixels["ban"]["y"], 10):
         print("waiting for ban phase")
         
         if cur_time > 60*30:
@@ -239,14 +239,13 @@ def accept_matches_until_ban_phase():
     print("ban phase DETECTED")
 
 def accept_match():
-     if img_screen_pixel_compare(img_path + color_pixels["accept_match"]["img"], color_pixels["accept_match"]["x"], color_pixels["accept_match"]["y"]):
-        mouse.move(pos["accept_match"]["x"], pos["accept_match"]["y"])
-        time.sleep(1)
+    mouse.move(pos["accept_match"]["x"], pos["accept_match"]["y"])
+    if img_screen_pixel_compare(img_path + color_pixels["accept_match"]["img"], color_pixels["accept_match"]["x"], color_pixels["accept_match"]["y"], 20):
         mouse.click()
 
 def detect_pick_phase():
     cur_time = 0
-    while not img_screen_pixel_compare(img_path + color_pixels["pick"]["img"], color_pixels["pick"]["x"], color_pixels["pick"]["y"]):
+    while not img_screen_pixel_compare(img_path + color_pixels["pick"]["img"], color_pixels["pick"]["x"], color_pixels["pick"]["y"], 10):
         time.sleep(1)
         print("waiting for pick phase")
         
@@ -259,7 +258,7 @@ def detect_pick_phase():
 
 def select_champ(option_1, option_2):
     
-    if img_screen_pixel_compare(img_path + color_pixels["pick"]["img"], color_pixels["pick"]["x"], color_pixels["pick"]["y"]):
+    if img_screen_pixel_compare(img_path + color_pixels["pick"]["img"], color_pixels["pick"]["x"], color_pixels["pick"]["y"], 10):
         
         time.sleep(2)
         mouse.move(pos["pick_champ_search"]["x"], pos["pick_champ_search"]["y"])
@@ -332,10 +331,8 @@ while True:
     
     while not is_league_game_running():
         accept_match()
-        
         select_champ("master", "warwick")
-        accept_matches_until_ban_phase()
-    
+        time.sleep(0.1)
     force_close_league()
     
     
