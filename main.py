@@ -14,6 +14,12 @@ champion_pick_2 = "warwick"
 img_path = "C:\\Users\\Trevor\\Documents\\delank\\images\\"
 
 color_pixels = {
+    "accept_match": {
+        'x': 640,
+        'y': 487,
+        'img': 'match_found.png'
+    },
+    
     "ban": {
         'x': 549,
         'y': 64,
@@ -160,7 +166,7 @@ def open_league_client():
 
 def Start_Accept_League_client():
     open_league_client()
-    time.sleep(35)
+    time.sleep(25)
     
     mouse.move(pos["verify_email_exit"]["x"], pos["verify_email_exit"]["y"])
     time.sleep(1)
@@ -223,9 +229,6 @@ def Start_Matchmaking(role_1: str, role_2: str):
 def accept_matches_until_ban_phase():
     cur_time = 0
     while not img_screen_pixel_compare(img_path + color_pixels["ban"]["img"], color_pixels["ban"]["x"], color_pixels["ban"]["y"]):
-        mouse.move(pos["accept_match"]["x"], pos["accept_match"]["y"])
-        time.sleep(1)
-        mouse.click()
         print("waiting for ban phase")
         
         if cur_time > 60*30:
@@ -234,6 +237,12 @@ def accept_matches_until_ban_phase():
             cur_time += 1
             
     print("ban phase DETECTED")
+
+def accept_match():
+     if img_screen_pixel_compare(img_path + color_pixels["accept_match"]["img"], color_pixels["accept_match"]["x"], color_pixels["accept_match"]["y"]):
+        mouse.move(pos["accept_match"]["x"], pos["accept_match"]["y"])
+        time.sleep(1)
+        mouse.click()
 
 def detect_pick_phase():
     cur_time = 0
@@ -249,22 +258,48 @@ def detect_pick_phase():
     print("pick phase DETECTED")
 
 def select_champ(option_1, option_2):
-    mouse.move(pos["pick_champ_search"]["x"], pos["pick_champ_search"]["y"])
-    time.sleep(1)
-    mouse.click()
-    time.sleep(2)
     
-    keyboard.write(option_1)
-    time.sleep(2)
-    mouse.move(pos["champ_search_1"]["x"], pos["champ_search_1"]["y"])
-    time.sleep(1)
-    mouse.click()
-    
-    
-    time.sleep(2)
-    mouse.move(pos["lock_in"]["x"], pos["lock_in"]["y"])
-    time.sleep(1)
-    mouse.click()
+    if img_screen_pixel_compare(img_path + color_pixels["pick"]["img"], color_pixels["pick"]["x"], color_pixels["pick"]["y"]):
+        
+        time.sleep(2)
+        mouse.move(pos["pick_champ_search"]["x"], pos["pick_champ_search"]["y"])
+        time.sleep(1)
+        mouse.click()
+        time.sleep(2)
+        
+        keyboard.write(option_1)
+        time.sleep(2)
+        mouse.move(pos["champ_search_1"]["x"], pos["champ_search_1"]["y"])
+        time.sleep(1)
+        mouse.click()
+        
+        
+        time.sleep(2)
+        mouse.move(pos["lock_in"]["x"], pos["lock_in"]["y"])
+        time.sleep(1)
+        mouse.click()
+
+
+        # second option
+        time.sleep(2)
+        mouse.move(pos["pick_champ_search"]["x"], pos["pick_champ_search"]["y"])
+        time.sleep(1)
+        mouse.click()
+        time.sleep(2)
+        
+        keyboard.write(option_2)
+        time.sleep(2)
+        mouse.move(pos["champ_search_1"]["x"], pos["champ_search_1"]["y"])
+        time.sleep(1)
+        mouse.click()
+        
+        
+        time.sleep(2)
+        mouse.move(pos["lock_in"]["x"], pos["lock_in"]["y"])
+        time.sleep(1)
+        mouse.click()
+        
+        
 
 def detect_league_game_start():
     
@@ -281,29 +316,30 @@ def detect_league_game_start():
 print("starting in 3 seconds...")
 
 time.sleep(3)
+
 while True:
     force_close_league()
-    time.sleep(15)
+    time.sleep(10)
     
     Start_Accept_League_client()
  
-    
+    if not is_league_game_running():
+        Start_Matchmaking("jg", "top")
     #time.sleep(60*20)
     
     time.sleep(3)
 
     
-    accept_matches_until_ban_phase()
+    while not is_league_game_running():
+        accept_match()
+        
+        select_champ("master", "warwick")
+        accept_matches_until_ban_phase()
     
-    detect_pick_phase()
-    
-    select_champ("master", "warwick")
-    
-    detect_league_game_start()
     force_close_league()
     
     
-    time.sleep(60*10)  
+    time.sleep(60*8)  
     #detect when match has ended by pooling opgg    
     
     
