@@ -3,6 +3,7 @@ import time
 import mouse
 import keyboard
 
+from porofessor_live import is_game_over
 from PIL import Image
 from PIL import ImageGrab
 import psutil
@@ -337,11 +338,26 @@ while True:
     while not is_league_game_running():
         accept_match()
         select_champ("master", "warwick")
-        time.sleep(0.1)
+        time.sleep(1)
+    
+    
     force_close_league()
     
     
-    time.sleep(60*8)  
+    time.sleep(60*6)
+    
+    max_times = 30
+    count = 0
+    while not is_game_over():
+        time.sleep(60)
+        count += 1
+        
+        if count > max_times:
+            break
+    
+    count = 0
+        
+        
     #detect when match has ended by pooling opgg    
     
     
