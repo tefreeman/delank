@@ -168,7 +168,7 @@ def open_league_client():
 
 def Start_Accept_League_client():
     open_league_client()
-    time.sleep(25)
+    time.sleep(60)
     
     mouse.move(pos["verify_email_exit"]["x"], pos["verify_email_exit"]["y"])
     time.sleep(1)
@@ -344,8 +344,9 @@ while True:
     force_close_league()
     
     
-    time.sleep(60*6)
-    
+    time.sleep(60*10)
+
+    '''
     max_times = 30
     count = 0
     while not is_game_over():
@@ -357,7 +358,7 @@ while True:
     
     count = 0
         
-        
+    ''' 
     #detect when match has ended by pooling opgg    
     
     
