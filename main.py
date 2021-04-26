@@ -11,12 +11,12 @@ import psutil
 champion_ban = "trundle"
 champion_pick_1 = "master"
 champion_pick_2 = "warwick"
-img_path = "C:\\Users\\Trevor\\Documents\\delank\\images\\"
+img_path = "C:\\Users\\trevo\\Documents\\delank\\delank\\images\\"
 
 color_pixels = {
     "accept_match": {
-        'x': 640,
-        'y': 487,
+        'x': 644,
+        'y': 485,
         'img': 'match_found.png'
     },
     
@@ -128,6 +128,7 @@ def img_screen_pixel_compare(img_path, x, y, max_diff):
     image_pixel = img_rgb.getpixel((x, y))
     
     total_pixel_diff = abs(screenshot_pixel[0] - image_pixel[0]) + abs(screenshot_pixel[1] - image_pixel[1]) + abs(screenshot_pixel[2] - image_pixel[2])
+    print(total_pixel_diff)
     if total_pixel_diff < max_diff:
         return True
     
@@ -239,9 +240,12 @@ def accept_matches_until_ban_phase():
     print("ban phase DETECTED")
 
 def accept_match():
-    mouse.move(pos["accept_match"]["x"], pos["accept_match"]["y"])
     if img_screen_pixel_compare(img_path + color_pixels["accept_match"]["img"], color_pixels["accept_match"]["x"], color_pixels["accept_match"]["y"], 20):
+        mouse.move(pos["accept_match"]["x"], pos["accept_match"]["y"])
+        time.sleep(1)
         mouse.click()
+        time.sleep(1)
+        mouse.move(0,0)
 
 def detect_pick_phase():
     cur_time = 0
@@ -315,6 +319,7 @@ def detect_league_game_start():
 print("starting in 3 seconds...")
 
 time.sleep(3)
+
 
 while True:
     force_close_league()
