@@ -129,7 +129,6 @@ def img_screen_pixel_compare(img_path, x, y, max_diff):
     image_pixel = img_rgb.getpixel((x, y))
     
     total_pixel_diff = abs(screenshot_pixel[0] - image_pixel[0]) + abs(screenshot_pixel[1] - image_pixel[1]) + abs(screenshot_pixel[2] - image_pixel[2])
-    print(total_pixel_diff)
     if total_pixel_diff < max_diff:
         return True
     
@@ -168,22 +167,33 @@ def open_league_client():
 
 def Start_Accept_League_client():
     open_league_client()
-    time.sleep(60)
     
-    mouse.move(pos["verify_email_exit"]["x"], pos["verify_email_exit"]["y"])
-    time.sleep(1)
-    mouse.click()
-    time.sleep(4)
-    
-    mouse.move(pos["leave_buster_warning_button"]["x"], pos["leave_buster_warning_button"]["y"])
-    time.sleep(1)
-    mouse.click()
-    time.sleep(6)
+    is_still_in_game =  False
+    loop_count = 0
+    while loop_count < 60:
+        if is_league_game_running():
+            is_still_in_game = True
+        loop_count += 1
+        time.sleep(1)
 
-    mouse.move(pos["demoted_message_button"]["x"], pos["demoted_message_button"]["y"])
-    time.sleep(1)
-    mouse.click()
-    time.sleep(6)
+    
+    if not is_still_in_game:
+        mouse.move(pos["verify_email_exit"]["x"], pos["verify_email_exit"]["y"])
+        time.sleep(1)
+        mouse.click()
+        time.sleep(4)
+        
+        mouse.move(pos["leave_buster_warning_button"]["x"], pos["leave_buster_warning_button"]["y"])
+        time.sleep(1)
+        mouse.click()
+        time.sleep(6)
+
+        mouse.move(pos["demoted_message_button"]["x"], pos["demoted_message_button"]["y"])
+        time.sleep(1)
+        mouse.click()
+        time.sleep(6)
+
+        Start_Matchmaking("jg", "top")
 
 def Start_Matchmaking(role_1: str, role_2: str):
     
@@ -323,14 +333,8 @@ time.sleep(3)
 
 
 while True:
-    force_close_league()
-    time.sleep(10)
     
     Start_Accept_League_client()
- 
-    if not is_league_game_running():
-        Start_Matchmaking("jg", "top")
-    #time.sleep(60*20)
     
     time.sleep(3)
 
