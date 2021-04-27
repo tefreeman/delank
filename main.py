@@ -12,7 +12,7 @@ import psutil
 champion_ban = "trundle"
 champion_pick_1 = "master"
 champion_pick_2 = "warwick"
-img_path = "C:\\Users\\trevo\\Documents\\delank\\delank\\images\\"
+img_path = "C:\\Users\\Trevor\\Documents\\delank\\images\\"
 
 color_pixels = {
     "accept_match": {
@@ -119,6 +119,24 @@ pos = {
 
 }
 
+game_pixels = {
+    "game_started_pos": {"x": 13, "y": 547, "img": "game_started.png"},
+    "empty_bar_color": {"x": 108, "y": 528, "img": "game_started.png"}
+}
+
+hp_bars = {
+    "top": {"x": 8, "y": 521, "w": 29, "h": 4},
+    "jg": {"x": 51, "y": 521, "w": 29, "h": 4},
+    "mid": {"x": 94, "y": 521, "w": 29, "h": 4},
+    "adc": {"x": 137, "y": 521, "w": 29, "h": 4},
+}
+
+def get_color(img, x, y):
+    im = Image.open(img_path + img, 'r')
+    img_rgb = im.convert("RGB")
+    return img_rgb.getpixel((x, y))
+
+
 def img_screen_pixel_compare(img_path, x, y, max_diff):   
     screenshot = ImageGrab.grab()
     screenshot_rgb: Image = screenshot.convert("RGB")
@@ -136,7 +154,19 @@ def img_screen_pixel_compare(img_path, x, y, max_diff):
         return False
         
 
+def detect_color_in_line(color, img_path, x, y, w, max_diff=20):
+    screenshot = ImageGrab.grab()
+    screenshot_rgb: Image = screenshot.convert("RGB")
+    screenshot_pixel = screenshot_rgb.getpixel((x,y))
     
+    
+    for i in range(0, w):
+        total_pixel_diff = abs(screenshot_pixel[0] - color[0]) + abs(screenshot_pixel[1] - color[1]) + abs(screenshot_pixel[2] - color[2])
+        if total_pixel_diff > max_diff:
+            return False
+        
+    
+    return True
 
     
 def force_close_league():
@@ -159,7 +189,10 @@ def is_league_game_running():
             pass
     return False
         
-        
+
+def has_game_started():
+    return img_screen_pixel_compare(img_path + game_pixels["game_started_pos"]["img"], game_pixels["game_started_pos"]["x"], game_pixels["game_started_pos"]["y"], 10)
+
 def open_league_client():
     subprocess.Popen(r'"C:\\Riot Games\\Riot Client\\RiotClientServices.exe" --launch-product=league_of_legends --launch-patchline=live')
 
@@ -332,8 +365,21 @@ print("starting in 3 seconds...")
 time.sleep(3)
 
 
+empty_bar_color = get_color(game_pixels["empty_bar_color"]["img"], game_pixels["empty_bar_color"]["x"], game_pixels["empty_bar_color"]["y"] )
 while True:
+    while not has_game_started():
+        time.sleep(1)
+        
+    if detect_color_in_line(empty_bar_color, round(hp_bars["adc"]["x"] + (hp_bars["adc"]["w"] / 1.5)), hp_bars["adc"]["y"], 4, 1, 20):
+        keyboard.press_and_release("e")
+        
+    time.sleep(1)
     
+    
+       
+    
+'''
+while True:
     Start_Accept_League_client()
     
     time.sleep(3)
@@ -356,8 +402,10 @@ while True:
     
     
     time.sleep(60*7)
+    
+'''
 
-    '''
+'''
     max_times = 30
     count = 0
     while not is_game_over():
@@ -369,19 +417,8 @@ while True:
     
     count = 0
         
-    ''' 
+''' 
+     
+    
     #detect when match has ended by pooling opgg    
-    
-    
-    
-    
-        
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
