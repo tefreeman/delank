@@ -121,7 +121,8 @@ pos = {
 
 game_pixels = {
     "game_started_pos": {"x": 13, "y": 547, "img": "game_started.png"},
-    "empty_bar_color": {"x": 108, "y": 528, "img": "game_started.png"}
+    "empty_bar_color": {"x": 108, "y": 528, "img": "game_started.png"},
+    "yummi_attached_color": {"x": 574, "y": 263, "img": "yummi_attached.png"}
 }
 
 hp_bars = {
@@ -131,12 +132,25 @@ hp_bars = {
     "adc": {"x": 137, "y": 521, "w": 29, "h": 4},
 }
 
+
 def get_color(img, x, y):
     im = Image.open(img_path + img, 'r')
     img_rgb = im.convert("RGB")
     return img_rgb.getpixel((x, y))
 
-
+def color_screen_pixel_compare(color, x, y, max_diff):
+    screenshot = ImageGrab.grab()
+    screenshot_rgb: Image = screenshot.convert("RGB")
+    screenshot_pixel = screenshot_rgb.getpixel((x,y))
+    
+    image_pixel = color
+    total_pixel_diff = abs(screenshot_pixel[0] - image_pixel[0]) + abs(screenshot_pixel[1] - image_pixel[1]) + abs(screenshot_pixel[2] - image_pixel[2])
+    if total_pixel_diff < max_diff:
+        return True
+    
+    else:
+        return False
+    
 def img_screen_pixel_compare(img_path, x, y, max_diff):   
     screenshot = ImageGrab.grab()
     screenshot_rgb: Image = screenshot.convert("RGB")
@@ -169,7 +183,10 @@ def detect_color_in_line(color, img_path, x, y, w, max_diff=20):
     
     return True
 
-    
+
+def is_yummi_attached(color, x, y, max_diff):
+    return color_screen_pixel_compare(color, x, y, max_diff)
+
 def force_close_league():
     leagueProcessNames = {"LeagueCrashHandler.exe", "RiotClientCrashHandler.exe", "LeagueClient.exe", "LeagueClientUxRender.exe", "LeagueClientUx.exe", "RiotClientServices.exe", "League of Legends.exe"}
     for proc in psutil.process_iter():
@@ -365,13 +382,16 @@ def detect_league_game_start():
 
 
 empty_bar_color = get_color(game_pixels["empty_bar_color"]["img"], game_pixels["empty_bar_color"]["x"], game_pixels["empty_bar_color"]["y"] )
+yummi_color = get_color(game_pixels["yummi_attached_color"]["img"], game_pixels["yummi_attached_color"]["x"],game_pixels["yummi_attached_color"]["y"])
+
 while not has_game_started():
     time.sleep(1)
         
 while True:
     if detect_color_in_line(empty_bar_color, round(hp_bars["mid"]["x"] + (hp_bars["mid"]["w"] / 1.60)), hp_bars["mid"]["y"]+1, 2, 1, 40):
         keyboard.press_and_release("e")
-        
+    
+    print(is_yummi_attached(yummi_color,  game_pixels["yummi_attached_color"]["x"], game_pixels["yummi_attached_color"]["y"], 20))
     time.sleep(1)
     
     
