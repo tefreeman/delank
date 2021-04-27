@@ -365,11 +365,11 @@ def detect_league_game_start():
 
 
 empty_bar_color = get_color(game_pixels["empty_bar_color"]["img"], game_pixels["empty_bar_color"]["x"], game_pixels["empty_bar_color"]["y"] )
-while True:
-    while not has_game_started():
-        time.sleep(1)
+while not has_game_started():
+    time.sleep(1)
         
-    if detect_color_in_line(empty_bar_color, round(hp_bars["mid"]["x"] + (hp_bars["mid"]["w"] / 1.5)), hp_bars["mid"]["y"]+1, 4, 1, 30):
+while True:
+    if detect_color_in_line(empty_bar_color, round(hp_bars["mid"]["x"] + (hp_bars["mid"]["w"] / 1.60)), hp_bars["mid"]["y"]+1, 2, 1, 40):
         keyboard.press_and_release("e")
         
     time.sleep(1)
