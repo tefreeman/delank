@@ -12,7 +12,7 @@ import psutil
 champion_ban = "trundle"
 champion_pick_1 = "master"
 champion_pick_2 = "warwick"
-img_path = "C:\\Users\\Trevor\\Documents\\delank\\images\\"
+img_path = "C:\\Users\\trevo\\Documents\\delank\\delank\\images\\"
 
 color_pixels = {
     "accept_match": {
@@ -162,6 +162,7 @@ def detect_color_in_line(color, img_path, x, y, w, max_diff=20):
     
     for i in range(0, w):
         total_pixel_diff = abs(screenshot_pixel[0] - color[0]) + abs(screenshot_pixel[1] - color[1]) + abs(screenshot_pixel[2] - color[2])
+        print(total_pixel_diff)
         if total_pixel_diff > max_diff:
             return False
         
@@ -360,9 +361,7 @@ def detect_league_game_start():
             cur_time += 1
     print("league game exe started")
 
-print("starting in 3 seconds...")
 
-time.sleep(3)
 
 
 empty_bar_color = get_color(game_pixels["empty_bar_color"]["img"], game_pixels["empty_bar_color"]["x"], game_pixels["empty_bar_color"]["y"] )
@@ -370,7 +369,7 @@ while True:
     while not has_game_started():
         time.sleep(1)
         
-    if detect_color_in_line(empty_bar_color, round(hp_bars["adc"]["x"] + (hp_bars["adc"]["w"] / 1.5)), hp_bars["adc"]["y"], 4, 1, 20):
+    if detect_color_in_line(empty_bar_color, round(hp_bars["mid"]["x"] + (hp_bars["mid"]["w"] / 1.5)), hp_bars["mid"]["y"]+1, 4, 1, 30):
         keyboard.press_and_release("e")
         
     time.sleep(1)
