@@ -17,4 +17,3 @@ def is_game_over(summoner_tag: str):
     except:
         return False
     
-print(is_game_over("diaperdáddy"))

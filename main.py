@@ -145,11 +145,10 @@ def force_close_league():
         
         try:
             if proc.name() in leagueProcessNames:
-                print(proc.name())
                 proc.kill()
                 
         except psutil.AccessDenied:
-            print("access denied")
+            pass
     
 def is_league_game_running():
     for proc in psutil.process_iter():
@@ -173,11 +172,12 @@ def Start_Accept_League_client():
     while loop_count < 60:
         if is_league_game_running():
             is_still_in_game = True
+            break
         loop_count += 1
         time.sleep(1)
 
     
-    if not is_still_in_game:
+    if is_still_in_game is False:
         mouse.move(pos["verify_email_exit"]["x"], pos["verify_email_exit"]["y"])
         time.sleep(1)
         mouse.click()
@@ -338,17 +338,24 @@ while True:
     
     time.sleep(3)
 
-    
+    max_time = 1*60*45
+    time_count = 0
     while not is_league_game_running():
         accept_match()
         select_champ("master", "warwick")
         time.sleep(1)
+        
+        time_count += 1
+
+        if time_count > max_time:
+            print("max time limit! restarting")
+            break
     
     
     force_close_league()
     
     
-    time.sleep(60*10)
+    time.sleep(60*7)
 
     '''
     max_times = 30
