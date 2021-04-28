@@ -55,6 +55,13 @@ class Color_Lib():
         
         return Color_Lib.fuzzy_color_match(img_color, screen_color)
 
+    @staticmethod
+    def match_color_screen(coords, color, max_color_diff=5, min_color_diff = -5):
+        screen = Color_Lib.get_screen()
+        
+        screen_color = Color_Lib.get_pixel_color(coords, screen)
+        
+        return Color_Lib.fuzzy_color_match(color, screen_color)
 
     @staticmethod
     def is_color_in_vline_on_screen(coords, height, color, max_color_diff=5, min_color_diff=-5):

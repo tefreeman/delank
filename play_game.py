@@ -8,9 +8,18 @@ class GameReader():
     shop_buy_reccommend_coord = {'coords': (245, 305), "img": "shop_open.png"}
     champ_loc_screen_coord = {'coords': (640, 340), "img": ""}
     troll_start_coord = {'coords': (140, 631), "img": ""}
-    yummi_is_attached_coord = {'coords': (590, 200), "height": 40, "color": (99, 93, 222)}
+    yummi_is_attached_coord = {'coords': (590, 200), "height": 40, "color": (99, 93, 222)} 
+    
+    hp_bars = {
+    "top": {"coords": (8, 521), "w": 29, "h": 4},
+    "jg": {"coords": (51, 521), "w": 29, "h": 4},
+    "mid": {"coords": (94, 521), "w": 29, "h": 4},
+    "adc": {"coords": (137, 521), "w": 29, "h": 4},
+    "color": (19,19,19)
+}
     def __init__(self, img_path):
         self.img_path = img_path
+        self.attached_to = None
         
     def wait_for_game_start(self):
         while True:
@@ -32,6 +41,16 @@ class GameReader():
         keyboard.press_and_release('p')
         time.sleep(1)
     
+    def attached_target_low(self, target = ""):
+        tar_coords = GameReader.hp_bars[target]
+        tar_coords["coords"][0] = tar_coords["coords"][0] + round(tar_coords["w"]/1.75)
+        tar_coords["coords"][1] = tar_coords["coords"][1] + 1
+        
+        if Color_Lib.match_color_screen(tar_coords["coords"], GameReader.hp_bars["color"]):
+            return True
+        
+        return False
+        
     def is_yummi_attached(self):
         return Color_Lib.is_color_in_vline_on_screen(GameReader.yummi_is_attached_coord["coords"], GameReader.yummi_is_attached_coord["height"], GameReader.yummi_is_attached_coord["color"], 10, -10)
     
@@ -70,7 +89,10 @@ class GameReader():
 def Play_Game(gameReader: GameReader):
     
     while True:
-        print(gameReader.is_yummi_attached())
+        print("top: ", gameReader.attached_target_low("top"))
+        print("jg: ", gameReader.attached_target_low("jg"))
+        print("mid: ", gameReader.attached_target_low("mid"))
+        print("adc: ", gameReader.attached_target_low("adc"))
         time.sleep(1)
     gameReader.wait_for_game_start()
     
