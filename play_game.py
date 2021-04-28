@@ -8,6 +8,7 @@ class GameReader():
     shop_buy_reccommend_coord = {'coords': (245, 305), "img": "shop_open.png"}
     champ_loc_screen_coord = {'coords': (640, 340), "img": ""}
     troll_start_coord = {'coords': (140, 631), "img": ""}
+    yummi_is_attached_coord = {'coords': (590, 200), "height": 40, "color": (99, 93, 222)}
     def __init__(self, img_path):
         self.img_path = img_path
         
@@ -32,9 +33,9 @@ class GameReader():
         time.sleep(1)
     
     def is_yummi_attached(self):
-        pass 
+        return Color_Lib.is_color_in_vline_on_screen(GameReader.yummi_is_attached_coord["coords"], GameReader.yummi_is_attached_coord["height"], GameReader.yummi_is_attached_coord["color"], 10, -10)
     
-    def start_game_troll():
+    def start_game_troll(self):
         mouse.move(GameReader.troll_start_coord["coords"][0], GameReader.troll_start_coord["coords"][1])
         time.sleep(0.5)
         mouse.click()
@@ -67,9 +68,16 @@ class GameReader():
         keyboard.release(tar_key)
 
 def Play_Game(gameReader: GameReader):
+    
+    while True:
+        print(gameReader.is_yummi_attached())
+        time.sleep(1)
     gameReader.wait_for_game_start()
     
     gameReader.buy_items()
     
     gameReader.start_game_troll()
-    
+
+gr = GameReader("C:\\Users\\Trevor\\Documents\\delank\\images\\")
+
+Play_Game(gr)
