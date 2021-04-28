@@ -42,7 +42,7 @@ class GameReader():
         time.sleep(1)
     
     def attached_target_low(self, target = ""):
-        tar_coords = (GameReader.hp_bars[target]["coords"][0]+ round(GameReader.hp_bars["w"]/1.75), GameReader.hp_bars["coords"][1] + 1)
+        tar_coords = (GameReader.hp_bars[target]["coords"][0]+ round(GameReader.hp_bars[target]["w"]/1.75), GameReader.hp_bars[target]["coords"][1] + 1)
         
         if Color_Lib.match_color_screen(tar_coords, GameReader.hp_bars["color"]):
             return True
