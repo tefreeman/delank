@@ -12,6 +12,10 @@ class Color_Lib():
         
     @staticmethod
     def get_screen():
+        if Color_Lib.screen is not None:
+            return Color_Lib.screen
+        else:
+          print("manually getting screen")
           with mss() as sct:
             monitor = sct.monitors[1]
             sct_img = sct.grab(monitor)

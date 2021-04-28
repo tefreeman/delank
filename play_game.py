@@ -2,14 +2,15 @@ import time
 from color_lib import Color_Lib
 import keyboard
 import mouse
-
+from screen_reader import ScreenReader
+import random
 class GameReader():
     is_game_started_coord = {'coords': (451, 692), 'img': 'game_started.png'}
     shop_buy_reccommend_coord = {'coords': (245, 305), "img": "shop_open.png"}
     champ_loc_screen_coord = {'coords': (640, 340), "img": ""}
     troll_start_coord = {'coords': (140, 631), "img": ""}
     yummi_is_attached_coord = {'coords': (590, 200), "height": 40, "color": (99, 93, 222)} 
-    i_dead = {'coods': (480, 680), 'height': 20, "color": (255, 0, 0)}
+    i_dead = {'coords': (480, 680), 'height': 20, "color": (255, 0, 0)}
     
     hp_bars = {
     "top": {"coords": (8, 521), "w": 29, "h": 4},
@@ -72,7 +73,7 @@ class GameReader():
     def is_i_dead(self):
         return Color_Lib.is_color_in_vline_on_screen(GameReader.i_dead["coords"], GameReader.i_dead["height"], GameReader.i_dead["color"], 15, -15)      
         
-    def attach(self, target: str):
+    def yummi_attach(self, target: str):
         tar_key = ""
         if target == "top":
             tar_key = "f1"
@@ -91,15 +92,43 @@ class GameReader():
         keyboard.release(tar_key)
 
 def Play_Game(gameReader: GameReader):
+    sr= ScreenReader()
+    sr.daemon = True
+    sr.start()
+          
+    gameReader.wait_for_game_start()  
+    gameReader.buy_items()
+    gameReader.start_game_troll()
     
     while True:
-        print(gameReader.is_i_dead())
-        time.sleep(1)
-    gameReader.wait_for_game_start()
-    
-    gameReader.buy_items()
-    
-    gameReader.start_game_troll()
+        if gameReader.i_dead():
+            time.sleep(1)
+            gameReader.buy_items()
+            while gameReader.i_dead is True:
+                time.sleep(1)
+                
+        if gameReader.is_yummi_attached() is False:
+            gameReader.yummi_attach("adc")
+            time.sleep(15)
+        
+        if gameReader.is_yummi_attached() is True:
+            if gameReader.attached_target_low("adc") is True:
+                keyboard.press_and_release('e')
+                
+            if random.randint(0, 600) == 100:
+                mouse.move(640, 360)
+                time.sleep(0.1)
+                keyboard.press_and_release('4')
+             
+            if random.randint(0, 800) == 100:
+                mouse.move(640, 480)
+                time.sleep(0.1)
+                keyboard.press_and_release('q')               
+                
+        time.sleep(0.05)
+        print('f')
+                
+            
 
 gr = GameReader("C:\\Users\\Trevor\\Documents\\delank\\images\\")
 
