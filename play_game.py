@@ -9,6 +9,7 @@ class GameReader():
     champ_loc_screen_coord = {'coords': (640, 340), "img": ""}
     troll_start_coord = {'coords': (140, 631), "img": ""}
     yummi_is_attached_coord = {'coords': (590, 200), "height": 40, "color": (99, 93, 222)} 
+    i_dead = {'coods': (480, 680), 'height': 20, "color": (255, 0, 0)}
     
     hp_bars = {
     "top": {"coords": (8, 521), "w": 29, "h": 4},
@@ -41,6 +42,9 @@ class GameReader():
         keyboard.press_and_release('p')
         time.sleep(1)
     
+    def is_i_dead(self):
+        return Color_Lib.is_color_in_vline_on_screen(GameReader.i_dead["coords"], GameReader.i_dead["height"], GameReader.i_dead["color"], 15, -15) 
+    
     def attached_target_low(self, target = ""):
         tar_coords = (GameReader.hp_bars[target]["coords"][0]+ round(GameReader.hp_bars[target]["w"]/1.75), GameReader.hp_bars[target]["coords"][1] + 1)
         
@@ -64,7 +68,9 @@ class GameReader():
         
         time.sleep(0.5)
         keyboard.press_and_release('b')
-        
+      
+    def is_i_dead(self):
+        return Color_Lib.is_color_in_vline_on_screen(GameReader.i_dead["coords"], GameReader.i_dead["height"], GameReader.i_dead["color"], 15, -15)      
         
     def attach(self, target: str):
         tar_key = ""
@@ -87,10 +93,7 @@ class GameReader():
 def Play_Game(gameReader: GameReader):
     
     while True:
-        print("top: ", gameReader.attached_target_low("top"))
-        print("jg: ", gameReader.attached_target_low("jg"))
-        print("mid: ", gameReader.attached_target_low("mid"))
-        print("adc: ", gameReader.attached_target_low("adc"))
+        print(gameReader.is_i_dead())
         time.sleep(1)
     gameReader.wait_for_game_start()
     
