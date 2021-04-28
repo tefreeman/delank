@@ -388,7 +388,7 @@ while not has_game_started():
     time.sleep(1)
         
 while True:
-    if detect_color_in_line(empty_bar_color, round(hp_bars["mid"]["x"] + (hp_bars["mid"]["w"] / 1.60)), hp_bars["mid"]["y"]+1, 2, 1, 40):
+    if detect_color_in_line(empty_bar_color, round(hp_bars["mid"]["x"] + (hp_bars["mid"]["w"] / 1.60)), hp_bars["mid"]["ynn"]+1, 2, 1, 40):
         keyboard.press_and_release("e")
     
     print(is_yummi_attached(yummi_color,  game_pixels["yummi_attached_color"]["x"], game_pixels["yummi_attached_color"]["y"], 20))
