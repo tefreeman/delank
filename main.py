@@ -380,24 +380,6 @@ def detect_league_game_start():
 
 
 
-
-empty_bar_color = get_color(game_pixels["empty_bar_color"]["img"], game_pixels["empty_bar_color"]["x"], game_pixels["empty_bar_color"]["y"] )
-yummi_color = get_color(game_pixels["yummi_attached_color"]["img"], game_pixels["yummi_attached_color"]["x"],game_pixels["yummi_attached_color"]["y"])
-
-while not has_game_started():
-    time.sleep(1)
-        
-while True:
-    if detect_color_in_line(empty_bar_color, round(hp_bars["mid"]["x"] + (hp_bars["mid"]["w"] / 1.60)), hp_bars["mid"]["ynn"]+1, 2, 1, 40):
-        keyboard.press_and_release("e")
-    
-    print(is_yummi_attached(yummi_color,  game_pixels["yummi_attached_color"]["x"], game_pixels["yummi_attached_color"]["y"], 20))
-    time.sleep(1)
-    
-    
-       
-    
-'''
 while True:
     Start_Accept_League_client()
     
@@ -407,7 +389,7 @@ while True:
     time_count = 0
     while not is_league_game_running():
         accept_match()
-        select_champ("master", "warwick")
+        select_champ("yummi", "warwick")
         time.sleep(1)
         
         time_count += 1

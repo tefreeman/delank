@@ -3,11 +3,14 @@ from mss import mss
 from PIL import Image
 from threading import Thread
 from color_lib import Color_Lib
+from game_state import GameState
 import time
 
 class ScreenReader(Thread):
-    def __init__(self):
+    def __init__(self, game_state, fps):
         Thread.__init__(self)
+        self.game_state = game_state
+        self.fps = fps
         self.running = True
         
     def run(self):
@@ -18,8 +21,8 @@ class ScreenReader(Thread):
             while self.running:
                 sct_img = sct.grab(monitor)
                 img = Image.frombytes('RGB', sct_img.size, sct_img.bgra, 'raw', 'BGRX')
-                Color_Lib.update_screen()
-                time.sleep(0.05)
+                self.game_state.update(img)
+                time.sleep(1/self.fps)
 
 
         
