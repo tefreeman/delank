@@ -1,6 +1,8 @@
+from utility import Utility
+
 class Player:
     def __init__(self, spell_lvl_order=()):
-        self.is_dead = False
+        self._is_dead = False
         self.hp = 1.0
 
 
@@ -8,4 +10,7 @@ class Player:
         self.hp = hp
     
     def set_is_dead(self, status: bool):
-        self.is_dead = status
+        self._is_dead = Utility.denoised_bool(status, "Player_set_is_dead")
+        
+    def is_dead(self):
+        return self._is_dead

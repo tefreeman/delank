@@ -2,7 +2,7 @@ import win32api, win32con
 import time
 
 class Utility:
-    _arrays = {'Yummi_set_attached': [False, False, False, False, False]}
+    _arrays = {'Yummi_set_attached': [False, False, False, False, False], 'Player_set_is_dead': [False, False, False, False, False, False, False, False, False, False]}
     
     @staticmethod
     def denoised_bool(status, arr_name):

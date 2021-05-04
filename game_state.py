@@ -20,7 +20,7 @@ class GameState():
         self._is_in_fountain = True
         self._is_adc_hp_low = False
         self._is_adc_hp_critical = False
-        
+        self._is_adc_dead = False
         self.yummi = Yummi()
         self.team = Team()
     
@@ -64,10 +64,16 @@ class GameState():
         y = GameCoords.health_bars['adc'].y+1
         
         self._is_adc_hp_critical = Color_Lib.match_color_screen(self.img, (x, y), GameCoords.health_bars['adc'].colors[0])
+    
+    def __u_is_adc_dead(self):
+        self._is_adc_dead = Color_Lib.fuzzy_color_match_test(self.img, GameCoords.health_bars['adc'], 15, -15)
         
     def __u_has_game_started(self):
         self._has_game_started = Color_Lib.match_color_screen(self.img, (GameCoords.has_game_started.x, GameCoords.has_game_started.y), GameCoords.has_game_started.colors[0])
 
+    def __u_player_is_alive(self):
+         self.yummi.set_is_dead(Color_Lib.fuzzy_color_match_test(self.img, GameCoords.my_champ_potrait_dead, 15, -15))
+        
     def has_game_started(self):
         return self._has_game_started
     
@@ -77,8 +83,12 @@ class GameState():
     def is_adc_hp_critical(self):
         return self._is_adc_hp_critical
     
+    def is_adc_dead(self):
+        return self._is_adc_dead
+    
     def is_yummi_attached(self):
         return self.yummi.is_attached()
+    
     
     def get_fountain_coords(self):
         return self._my_fountain_coords

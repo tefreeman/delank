@@ -43,7 +43,7 @@ class Color_Lib():
             
     @staticmethod
     def fuzzy_color_match_test(screen: Image, coord: Coords, max_color_dif = 5, min_color_diff = -5):
-        detections = {'top': False, 'bottom': False, }
+        detections = {'top': False, 'bottom': False, 'left': False, 'right': False}
         for color in coord.colors:
             if coord.shape == "vline":
                 for i in range(coord.y,  round(coord.y + coord.h/2)):
@@ -53,8 +53,17 @@ class Color_Lib():
                 for j in range(coord.y - round(coord.h/2), coord.y):
                     if Color_Lib.fuzzy_color_match(Color_Lib.get_pixel_color((coord.x, j), screen), color, max_color_dif, min_color_diff):
                         detections['top'] = True
-                        
-        return detections['top'] or detections['bottom']
+            
+            elif coord.shape == "hline":
+                for i in range(coord.x, round(coord.x + coord.w)):
+                    if Color_Lib.fuzzy_color_match(Color_Lib.get_pixel_color((i, coord.y), screen), color, max_color_dif, min_color_diff):
+                        detections['left'] = True     
+        
+        if coord.shape == "vline":      
+            return detections['top'] or detections['bottom']
+        
+        elif coord.shape == "hline":
+            return detections['left'] or detections['right']
     
     @staticmethod
     def get_pixel_color(coords, img: Image):
