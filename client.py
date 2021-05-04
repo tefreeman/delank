@@ -5,9 +5,11 @@ import time
 import mouse
 import keyboard
 from color_lib import Color_Lib
+from win32.win32gui import GetForegroundWindow, GetWindowRect, MoveWindow
+
 class Client():
     
-    img_path = "C:/Users/Trevor/Documents/delank/images/"
+    img_path = "C:/Users/trevo/Documents/delank/delank/images/"
     role_pos = {
         "top": Coords(x=432, y=441),
         "jg": Coords(x=457, y=386),
@@ -18,9 +20,9 @@ class Client():
     }
     
     pos_messages_dismiss = {
+        "verify_email_exit_2": Coords(x=841, y=132),
         "leave_buster_warning_button": Coords(x=640, y=402),
         "demoted_message_button": Coords(x=654, y=371),
-        "verify_email_exit_2": Coords(x=841, y=132),
         "verify_email_exit": Coords(x=840, y=89),
     }
     play_button_rdy = Coords(x=225, y=72, img="v2/client_play.png")
@@ -74,6 +76,10 @@ class Client():
         print(Color_Lib.match_color_screen_img((Client.play_button_rdy.x, Client.play_button_rdy.y), Client.img_path + Client.play_button_rdy.img))
         return Color_Lib.match_color_screen_img((Client.play_button_rdy.x, Client.play_button_rdy.y), Client.img_path + Client.play_button_rdy.img)
             
+    
+    @staticmethod
+    def move_client():
+        MoveWindow(GetForegroundWindow(), -7,0, 1115, 632, True)
         
     @staticmethod
     def open_ready_client():
@@ -90,7 +96,7 @@ class Client():
                 mouse.move(val.x, val.y)
                 time.sleep(0.5)
                 mouse.click()
-                time.sleep(0.5)
+                time.sleep(1.5)
                 if Client._is_client_play_button_ready() is True:
                     break
             
