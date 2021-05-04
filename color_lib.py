@@ -15,6 +15,13 @@ class Color_Lib():
             return img
     
     @staticmethod
+    def get_screen():
+          with mss() as sct:
+            monitor = sct.monitors[1]
+            sct_img = sct.grab(monitor)
+            return Image.frombytes('RGB', sct_img.size, sct_img.bgra, 'raw', 'BGRX')
+        
+    @staticmethod
     def fuzzy_color_match(input_c, output_c, max_color_dif = 5, min_color_diff = -5):
         if (input_c[0] - output_c[0]) > max_color_dif or (input_c[0] - output_c[0]) < min_color_diff:
             return False
@@ -78,7 +85,8 @@ class Color_Lib():
 
     
     @staticmethod
-    def match_color_screen_img(screen, coords, img_path, max_color_diff=5, min_color_diff = -5):
+    def match_color_screen_img(coords, img_path, max_color_diff=5, min_color_diff = -5):
+        screen = Color_Lib.get_screen()
         img = Color_Lib.get_img(img_path)
         img_color = Color_Lib.get_pixel_color(coords, img)
         screen_color = Color_Lib.get_pixel_color(coords, screen)
