@@ -34,6 +34,9 @@ class GameState():
         
         if self._has_game_started == False:
             self.__u_has_game_started()
+
+            if self._has_game_started is True:
+                self._set_ally_fountain_loc()
         else:
              self.__u_yummi_attached()
              self.__u_is_adc_hp_low()
@@ -48,7 +51,7 @@ class GameState():
             self._general_enemy_dir_coords = Coords(x=380, y=470)
             
     def __u_yummi_attached(self):
-        self.yummi.set_attached(Color_Lib.fuzzy_color_match_test(self.img, GameCoords.yummi_attached), 10, -10)
+        self.yummi.set_attached(Color_Lib.fuzzy_color_match_test(self.img, GameCoords.yummi_attached, 10, -10))
     
     def __u_is_adc_hp_low(self):
         x = GameCoords.health_bars['adc'].x + round( GameCoords.health_bars['adc'].w * self.ally_low_hp)
@@ -64,7 +67,7 @@ class GameState():
         
     def __u_has_game_started(self):
         self._has_game_started = Color_Lib.match_color_screen(self.img, (GameCoords.has_game_started.x, GameCoords.has_game_started.y), GameCoords.has_game_started.colors[0])
-    
+
     def has_game_started(self):
         return self._has_game_started
     
@@ -77,6 +80,9 @@ class GameState():
     def is_yummi_attached(self):
         return self.yummi.is_attached()
     
+    def get_fountain_coords(self):
+        return self._my_fountain_coords
+
     def update(self):
         with mss() as sct:
             monitor = sct.monitors[1]

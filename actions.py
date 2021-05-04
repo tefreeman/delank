@@ -1,4 +1,5 @@
 from game_coords import GameCoords
+from coords import Coords
 from utility import Utility
 import keyboard
 import time
@@ -23,26 +24,28 @@ class Actions:
         time.sleep(0.25)
         
         keyboard.release(key)
-        
+    
+    @staticmethod   
     def cast_spell(key):
         keyboard.press_and_release(key)
-    
+    @staticmethod
     def camera_lock():
         keyboard.press_and_release('y')
-        
+    @staticmethod    
     def purchase_recommend():
         keyboard.press_and_release('p')
         mouse.move(GameCoords.shop_select_recommend.x, GameCoords.shop_select_recommend.y)
         time.sleep(0.25)
-        Utility.click()
+        Utility.left_click()
         time.sleep(0.25)
         mouse.move(GameCoords.shop_purchase_selected.x, GameCoords.shop_purchase_selected.y)
         time.sleep(0.25)
-        Utility.click()
+        Utility.left_click()
         time.sleep(0.25)
         keyboard.press_and_release('p')
         time.sleep(0.25)
-        
+    
+    @staticmethod   
     def type_in_chat(msg: str):
         keyboard.press_and_release('enter')
         time.sleep(0.25)
@@ -50,4 +53,10 @@ class Actions:
         keyboard.press_and_release('enter')
         time.sleep(0.1)
         
-        
+    
+    @staticmethod
+    def retreat(coord: Coords):
+        mouse.move(coord.x, coord.y)
+        time.sleep(0.1)
+        Utility.left_click()
+        time.sleep(0.05)

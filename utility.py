@@ -1,8 +1,8 @@
-import win32, win32com
-
+import win32api, win32con
+import time
 
 class Utility:
-    _arrays = {'Yummi_set_attached': [False, False, False, False, False, False, False, False, False]}
+    _arrays = {'Yummi_set_attached': [False, False, False, False, False]}
     
     @staticmethod
     def denoised_bool(status, arr_name):
@@ -23,7 +23,6 @@ class Utility:
         
     @staticmethod
     def left_click():
-        win32api.mouse_event(win32com.MOUSEEVENTF_LEFTDOWN,0,0)
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
         time.sleep(.1)
-        win32api.mouse_event(MOUSEEVENTF_LEFTUP,0,0)
-        print('Left Click')
+        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
