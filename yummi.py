@@ -2,7 +2,7 @@ from player import Player
 from utility import Utility
 
 class Yummi(Player):
-    def __init__(self, spell_lvl_order):
+    def __init__(self, spell_lvl_order=()):
         Player.__init__(self)
         self._is_attached = False
 
@@ -21,9 +21,4 @@ class Yummi(Player):
     
     def auto_level(self):
         pass
-
-        
-
-    
-test = Yummi()
 

@@ -1,3 +1,6 @@
+import win32, win32com
+
+
 class Utility:
     _arrays = {'Yummi_set_attached': [False, False, False, False, False, False, False, False, False]}
     
@@ -18,3 +21,9 @@ class Utility:
         return t_count > f_count
         
         
+    @staticmethod
+    def left_click():
+        win32api.mouse_event(win32com.MOUSEEVENTF_LEFTDOWN,0,0)
+        time.sleep(.1)
+        win32api.mouse_event(MOUSEEVENTF_LEFTUP,0,0)
+        print('Left Click')

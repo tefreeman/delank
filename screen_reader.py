@@ -10,7 +10,7 @@ class ScreenReader(Thread):
     def __init__(self, game_state, fps):
         Thread.__init__(self)
         self.game_state = game_state
-        self.fps = fps
+        self.sleep_time = 1.0/fps
         self.running = True
         
     def run(self):
@@ -18,11 +18,12 @@ class ScreenReader(Thread):
         with mss() as sct:
             monitor = sct.monitors[1]
             # mon = {"top": 800, "left": 0, "width": 280, "height": 280}
-            while self.running:
+            while self.running is True:
                 sct_img = sct.grab(monitor)
                 img = Image.frombytes('RGB', sct_img.size, sct_img.bgra, 'raw', 'BGRX')
                 self.game_state.update(img)
-                time.sleep(1/self.fps)
+                print('fire')
+                time.sleep(self.sleep_time)
 
 
         
