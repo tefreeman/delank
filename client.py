@@ -20,6 +20,7 @@ class Client():
     pos_messages_dismiss = {
         "leave_buster_warning_button": Coords(x=640, y=402),
         "demoted_message_button": Coords(x=654, y=371),
+        "verify_email_exit_2": Coords(x=841, y=132),
         "verify_email_exit": Coords(x=840, y=89),
     }
     play_button_rdy = Coords(x=225, y=72, img="v2/client_play.png")
