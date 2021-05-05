@@ -35,6 +35,7 @@ class Client():
     role_1_pos = Coords(x=378, y=383)
     role_2_pos = Coords(x=452, y=383)
     
+    find_match_rdy_button = Coords (x=420, y=535, img="v2/client_find_match_ready.png")
     find_match_button = Coords(x=430, y=538)
     accept_match_button = Coords(x=507, y=429, img="v2/client_accept_match.png")
     
@@ -116,15 +117,24 @@ class Client():
     def accept_match(max_time_mins, champ_name):
         count = 0
         while not Client.is_league_game_running() and count < max_time_mins * 60:
+            #pick_champ_phase
             if Color_Lib.match_color_screen_img((Client.pick_champ_detect.x, Client.pick_champ_detect.y), Client.img_path + Client.pick_champ_detect.img):
                 Client.select_champ(champ_name)
                 time.sleep(10)
+            #accept_match_phase
             if Color_Lib.match_color_screen_img((Client.accept_match_button.x, Client.accept_match_button.y), Client.img_path + Client.accept_match_button.img):
                 mouse.move(Client.accept_match_button.x, Client.accept_match_button.y+10)
                 time.sleep(0.5)
                 mouse.click()
                 time.sleep(0.5)
                 mouse.move(0,0)
+                time.sleep(10)
+            #dodged restart find match
+            if Color_Lib.match_color_screen_img((Client.find_match_rdy_button.x, Client.find_match_rdy_button.y),Client.img_path + Client.find_match_rdy_button.img):
+                mouse.move(Client.find_match_button.x, Client.find_match_button.y)
+                time.sleep(0.5)
+                mouse.click()
+                time.sleep(0.5)
                 time.sleep(10)
             count += 1
             time.sleep(1)
