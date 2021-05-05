@@ -11,6 +11,11 @@ class Actions:
         pass
     
     _rand_messages = ["...", "D:","shit", "my b", "i suck", "come on now", "yummi sucks so much sometimes", "sorry im kinda new", "god damn", "we got wrecked", "jesus", "yeah prob gg", "im not toxic, but i feel toxic rn", "ugh, plz come on", "I can't do this anymore", "I need to find a new game", "lmao", "come on ur gotta be the adc", "I can't carry this!", "lordy", "gg", "this is no fun", "/all get good", "/all ez gg", "i don't like to get off, soz", "dang I gotta do better", "u gotta play safer", "plz play safer", "don't play aggro", "play passive", "u having fun?", "this sucks", "yummi always gets wrecked in lane", "i need to find a new game", "we aren't carrying bot lane that's for sure", "maybe i need to learn a new champ", "ughhhhhhh", "plz no", "I don't think we can win this lane", "yummi is a strong LATE game champ", "zzzz"]
+    _cast_cds = {
+        'q': {'wait_time': 0, 'cd': 2},
+        'e': {'wait_time': 0, 'cd': 2},
+        'r': {'wait_time': 0, 'cd': 10}
+    }
     last_attach = 0
     
     @staticmethod
@@ -35,7 +40,12 @@ class Actions:
     
     @staticmethod   
     def cast_spell(key):
-        keyboard.press_and_release(key)
+        if key in Actions._cast_cds:
+            if time.time() > Actions._cast_cds[key]['wait_time']:
+                keyboard.press_and_release(key)
+                Actions._cast_cds[key]['wait_time'] = time.time() + Actions._cast_cds[key]['cd']
+        else:
+            keyboard.press_and_release(key)
         
     @staticmethod
     def level_all_spells(s1, s2, s3, s4):
@@ -87,5 +97,5 @@ class Actions:
     def retreat(coord: Coords):
         mouse.move(coord.x, coord.y)
         time.sleep(0.1)
-        Utility.left_click()
+        Utility.right_click()
         time.sleep(0.05)

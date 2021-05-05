@@ -6,13 +6,13 @@ from game_state import GameState
 from action_system import ActionSystem
 from actions import Actions
 import random
-
+from client import Client
 
 def PlayGame():
     gs = GameState()
     loop_count = 0
     first_run = True
-    while True:
+    while Client.is_league_game_running():
         gs.update()
         
         if gs.has_game_started():
@@ -50,11 +50,12 @@ def PlayGame():
                     Actions.retreat(gs.get_fountain_coords())
             
                 
-            if loop_count > 200:
+            if loop_count > 50:
                 Actions.level_all_spells('r', 'q', 'w', 'e')
                 loop_count = 0
                 
             loop_count += 1
+            print(loop_count)
             time.sleep(0.04)
 
     

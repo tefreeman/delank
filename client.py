@@ -10,8 +10,9 @@ from win32.win32gui import GetForegroundWindow, GetWindowRect, MoveWindow
 
 
 class Client():
-    #C:/Users/Trevor/Documents/delank/images
-    img_path = "C:/Users/Trevor/Documents/delank/images/"
+    #C:/Users/trevo/Documents/delank/delank/images/
+    #C:/Users/Trevor/Documents/delank/images/
+    img_path = "C:/Users/trevo/Documents/delank/delank/images/"
     role_pos = {
         "top": Coords(x=300, y=384),
         "jg": Coords(x=323, y=327),
@@ -79,6 +80,10 @@ class Client():
     
     @staticmethod
     def move_client():
+        mouse.move(560,90)
+        time.sleep(.1)
+        mouse.click()
+        time.sleep(.5)
         MoveWindow(GetForegroundWindow(), -7,0, 1024, 576, True)
         
     @staticmethod
@@ -184,9 +189,10 @@ class Client():
 
     @staticmethod
     def get_into_game(role1, role2, champ, max_time_mins):
-        Client.open_ready_client(35)
-        time.sleep(1)
-        Client.start_match_search(role1, role2)
-        Client.accept_match(max_time_mins, champ)
+        if not Client.is_league_game_running():
+            Client.open_ready_client(35)
+            time.sleep(1)
+            Client.start_match_search(role1, role2)
+            Client.accept_match(max_time_mins, champ)
 
             
