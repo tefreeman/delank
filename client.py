@@ -65,7 +65,7 @@ class Client():
                 if proc.name() in leagueProcessNames:
                     proc.kill()
                     
-            except psutil.AccessDenied:
+            except:
                 pass
     
     @staticmethod
@@ -74,7 +74,7 @@ class Client():
             try:
                 if proc.name().lower() == "League of Legends.exe".lower():
                     return True
-            except psutil.AccessDenied:
+            except:
                 pass
         return False
     

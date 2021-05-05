@@ -8,12 +8,12 @@ from actions import Actions
 import random
 from client import Client
 
-def PlayGame():
+def PlayGame(stop_flag):
     gs = GameState()
     loop_count = 0
     ff_time = 0
     first_run = True
-    while Client.is_league_game_running():
+    while Client.is_league_game_running() and not stop_flag['va']:
         gs.update()
         
         if gs.has_game_started():
