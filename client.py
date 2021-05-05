@@ -12,7 +12,7 @@ from win32.win32gui import GetForegroundWindow, GetWindowRect, MoveWindow
 class Client():
     #C:/Users/trevo/Documents/delank/delank/images/
     #C:/Users/Trevor/Documents/delank/images/
-    img_path = "C:/Users/trevo/Documents/delank/delank/images/"
+    img_path = "C:/Users/Trevor/Documents/delank/images/"
     role_pos = {
         "top": Coords(x=300, y=384),
         "jg": Coords(x=323, y=327),

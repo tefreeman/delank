@@ -11,6 +11,7 @@ from client import Client
 def PlayGame():
     gs = GameState()
     loop_count = 0
+    ff_time = 0
     first_run = True
     while Client.is_league_game_running():
         gs.update()
@@ -22,6 +23,11 @@ def PlayGame():
                 time.sleep(1)
                 Actions.purchase_recommend()
                 first_run = False
+                ff_time = time.time() + 60*15
+            
+            if time.time() > ff_time: 
+                Actions.type_in_chat("/ff")
+                ff_time += 60
                 
             if not gs.is_adc_dead() and not gs.is_i_dead():
                 if gs.is_yummi_attached() is True:
