@@ -5,8 +5,8 @@ import time
 import mouse
 import keyboard
 from color_lib import Color_Lib
-from win32.win32gui import GetForegroundWindow, GetWindowRect, MoveWindow
-
+from win32.win32gui import GetForegroundWindow, GetWindowRect, MoveWindow, IsWindowVisible ,GetWindowText, EnumWindows, FindWindow, SetForegroundWindow
+from win32.win32process import GetWindowThreadProcessId
 
 
 class Client():
@@ -44,6 +44,17 @@ class Client():
     
     lock_in_button = Coords(x=504, y=486)
     
+
+    league_client_name = "League of Legends"
+    
+    @staticmethod
+    def set_league_client_active():
+        handle = Client.get_league_client_handle()
+        SetForegroundWindow(handle)
+    
+    @staticmethod
+    def get_league_client_handle():
+        return FindWindow(0, Client.league_client_name) 
     
     @staticmethod
     def force_close_league():
@@ -80,16 +91,15 @@ class Client():
     
     @staticmethod
     def move_client():
-        mouse.move(560,90)
-        time.sleep(.1)
-        mouse.click()
-        time.sleep(.5)
-        MoveWindow(GetForegroundWindow(), -7,0, 1024, 576, True)
+        MoveWindow(Client.get_league_client_handle(), -7,0, 1024, 576, True)
         
     @staticmethod
     def open_ready_client(wait_time):
+        
         Client.open_league_client()
         time.sleep(wait_time)
+        Client.set_league_client_active()
+        time.sleep(2)
         Client.move_client()
         time.sleep(2)
         
@@ -110,9 +120,11 @@ class Client():
                 Client.select_champ(champ_name)
                 time.sleep(10)
             if Color_Lib.match_color_screen_img((Client.accept_match_button.x, Client.accept_match_button.y), Client.img_path + Client.accept_match_button.img):
-                mouse.move(Client.accept_match_button.x, Client.accept_match_button.y)
+                mouse.move(Client.accept_match_button.x, Client.accept_match_button.y+10)
                 time.sleep(0.5)
                 mouse.click()
+                time.sleep(0.5)
+                mouse.move(0,0)
                 time.sleep(10)
             count += 1
             time.sleep(1)
@@ -194,5 +206,3 @@ class Client():
             time.sleep(1)
             Client.start_match_search(role1, role2)
             Client.accept_match(max_time_mins, champ)
-
-            
