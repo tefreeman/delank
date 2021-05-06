@@ -1,0 +1,196 @@
+career-stats-settings:
+    data:
+        initialVisited: true
+        welcomedSeason: 11
+    schemaVersion: 1
+champ-select:
+    data:
+        skins:
+            1: 1000
+            10: 10000
+            103: 103000
+            11: 11000
+            111: 111000
+            117: 117000
+            12: 12000
+            122: 122000
+            13: 13000
+            14: 14000
+            147: 147000
+            16: 16016
+            18: 18000
+            19: 19000
+            20: 20000
+            222: 222000
+            223: 223000
+            23: 23000
+            27: 27000
+            29: 29000
+            30: 30000
+            31: 31000
+            34: 34000
+            350: 350000
+            36: 36000
+            38: 38000
+            4: 4000
+            40: 40000
+            429: 429000
+            45: 45000
+            48: 48000
+            517: 517000
+            53: 53000
+            54: 54000
+            57: 57000
+            61: 61000
+            67: 67000
+            69: 69000
+            75: 75000
+            8: 8000
+            82: 82000
+            86: 86000
+            875: 875000
+            89: 89000
+            96: 96000
+        spells:
+            1020:
+            - 3
+            - 4
+            400:
+            - 6
+            - 4
+            420:
+            - 7
+            - 3
+            430:
+            - 6
+            - 12
+            440:
+            - 3
+            - 1
+    schemaVersion: 1
+clash-tutorial:
+    data:
+        initialized: true
+        version: 1
+    schemaVersion: 1
+custom-spell-selections:
+    data:
+        custom-spell-selections:
+            spell1: 7
+            spell2: 14
+    schemaVersion: 0
+emotes:
+    data:
+        newEmotes:
+        - 3181
+        - 3356
+        - 3142
+        - 3002
+    schemaVersion: 1
+lol-champ-select:
+    data:
+        reportAndMutingTooltipShown: true
+    schemaVersion: 0
+lol-chat:
+    data:
+        chatFilterDisabled: true
+    schemaVersion: 1
+lol-clash:
+    data:
+        clash-start-modal-seen: true
+        lftPlayerToggleTooltipSeen: true
+    schemaVersion: 1
+lol-collection-champions:
+    data:
+        groupingDropdownKey: ""
+        lastVisitTime: 1619828069522
+        sortingDropdownKey: ""
+        unownedFilter: "none"
+    schemaVersion: 1
+lol-general:
+    data:
+        uploadCrashReports: false
+    schemaVersion: 1
+lol-home-hubs:
+    data:
+        season-start-2021:
+            esportsViewed: true
+            s21Viewed: true
+    schemaVersion: 1
+lol-leagues:
+    data:
+        FIRST_CHALLENGER_OF_SEASON-RANKED_SOLO_5x5: 11
+        hasSeenFlexRestrictionModal: true
+        last-split-end-notification: 11.100000
+        last-split-start-modal: 11.200000
+        season-memorial-modal: 10
+        season-start-takeover:
+            season: 11
+    schemaVersion: 1
+lol-notifications:
+    data:
+        blockNonFriendGameInvites: true
+        disableCollectionsNotifications: true
+        disableEsportsNotifications: true
+        rgmNotificationTimestamp: 1618530145448
+    schemaVersion: 1
+lol-npe-tutorial-path:
+    data:
+        hasSeenTutorialPath: false
+        hasSkippedTutorialPath: false
+        shouldSeeNewPlayerExperience: false
+    schemaVersion: 1
+lol-parties:
+    data:
+        hasSeenOpenPartyFirstExperience: true
+        hasSeenOpenPartyTooltip: true
+    schemaVersion: 1
+lol-player-behavior:
+    data:
+        codeOfConductAccepted: true
+    schemaVersion: 0
+lol-premade-voice:
+    data:
+        autoJoin: true
+        inputMode: "voiceActivity"
+        muteOnConnect: false
+        pushToTalkKey: "[<Unbound>]"
+        showFirstExperienceInGame: false
+        showFirstExperienceInLCU: false
+    schemaVersion: 1
+lol-profiles:
+    data:
+        ranked-reference-modal-login-seen-for-season: 10
+    schemaVersion: 0
+lol-skins-viewer:
+    data:
+        groupingDropdownKey: "myCollection"
+        lastVisitTime: 1619402404083
+        sortingDropdownKey: "acquisitionDate"
+        unownedFilter: false
+    schemaVersion: 2
+lol-tft:
+    data:
+        previouslySeenSeasons: "TFTBattlepass_Fates2_Series,TFTBattlepass_Reckoning1_Series"
+    schemaVersion: 1
+lol-tutorial:
+    data:
+        championSelectRunesTooltipSeenCount: 9
+        perksCreateNewPageSeen: true
+        perksPresetPagesSeen: true
+        perksPrimaryPathSeen: true
+        perksStatModsSeen: true
+    schemaVersion: 1
+missions-settings:
+    data:
+        selected_series: "all_missions"
+    schemaVersion: 0
+parties-settings:
+    data:
+        Parties:
+            defaultPartyType: "closed"
+    schemaVersion: 0
+personalized-offers:
+    data:
+        lastViewedTimestamp: "2021-05-01T01:08:49.348Z"
+    schemaVersion: 1

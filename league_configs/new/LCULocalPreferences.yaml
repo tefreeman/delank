@@ -1,0 +1,44 @@
+GeoInfo:
+    data:
+        city: "birmingham"
+        country: "usa"
+        region: "al"
+    schemaVersion: 1
+lol-clash:
+    data:
+        simpleStateFlagIds:
+        - "registration_open_tournament_3421"
+        - "registration_open_tournament_2941"
+        - "lock_in_open_tournament_2941_phase_3061"
+        - "registration_open_tournament_3361"
+        - "lock_in_open_tournament_3361_phase_3481"
+        - "lock_in_open_tournament_3381_phase_3501"
+    schemaVersion: 1
+lol-home:
+    data:
+        useTFTOverride: false
+    schemaVersion: 0
+lol-parties:
+    data:
+        permanentHideAutofillModal: true
+    schemaVersion: 1
+lol-premade-voice:
+    data:
+        currentCaptureDeviceHandle: "Default System Device"
+        inputVolume: 50
+        vadSensitivity: 65
+    schemaVersion: 1
+lol-replays:
+    data:
+        dontShowEogUsageTip: true
+    schemaVersion: 1
+lol-user-experience:
+    data:
+        hasBeenPromptedForPotatoMode: true
+        lastKnownMachineSpec: 5
+        potatoModeEnabled: false
+    schemaVersion: 2
+video:
+    data:
+        ZoomScale: 0.800000
+    schemaVersion: 1

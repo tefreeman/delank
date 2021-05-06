@@ -4,15 +4,16 @@ import subprocess
 import time
 import mouse
 import keyboard
+import os
 from color_lib import Color_Lib
 from win32.win32gui import GetForegroundWindow, GetWindowRect, MoveWindow, IsWindowVisible ,GetWindowText, EnumWindows, FindWindow, SetForegroundWindow
 from win32.win32process import GetWindowThreadProcessId
 
 
 class Client():
-    #C:/Users/trevo/Documents/delank/delank/images/
-    #C:/Users/Trevor/Documents/delank/images/
-    img_path = "C:/Users/Trevor/Documents/delank/images/"
+    main_dir = os.path.dirname(__file__)
+    img_path = os.path.join(main_dir, "images\\")
+
     role_pos = {
         "top": Coords(x=300, y=384),
         "jg": Coords(x=323, y=327),
@@ -86,7 +87,6 @@ class Client():
     
     @staticmethod
     def _is_client_play_button_ready():
-        print(Color_Lib.match_color_screen_img((Client.play_button_rdy.x, Client.play_button_rdy.y), Client.img_path + Client.play_button_rdy.img))
         return Color_Lib.match_color_screen_img((Client.play_button_rdy.x, Client.play_button_rdy.y), Client.img_path + Client.play_button_rdy.img)
             
     
