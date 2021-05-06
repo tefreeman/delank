@@ -21,6 +21,11 @@ class GameState():
         self._is_adc_hp_low = False
         self._is_adc_hp_critical = False
         self._is_adc_dead = False
+        
+        #self._is_in_fountain = False
+        #self_is_camera_locked = False
+        
+        
         self.yummi = Yummi()
         self.team = Team()
     

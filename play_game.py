@@ -13,10 +13,10 @@ def PlayGame(stop_flag):
     loop_count = 0
     ff_time = 0
     first_run = True
-    while Client.is_league_game_running() and not stop_flag['va']:
+    while Client.is_league_game_running():
         gs.update()
         
-        if gs.has_game_started():
+        if gs.has_game_started() and not stop_flag['val']:
             if first_run is True:
                 time.sleep(20)
                 Actions.cast_spell('y')

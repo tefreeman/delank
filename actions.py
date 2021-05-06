@@ -92,10 +92,26 @@ class Actions:
     def type_shit_in_chat():
         num = random.randint(0, len(Actions._rand_messages)-1)
         Actions.type_in_chat(Actions._rand_messages[num])
-        
+    
     @staticmethod
     def retreat(coord: Coords):
         mouse.move(coord.x, coord.y)
         time.sleep(0.1)
+        Utility.left_click()
+        Actions.cast_spell('e')
+        time.sleep(0.60)
         Utility.right_click()
-        time.sleep(0.05)
+        count = 0
+        
+        while count < 10:
+            Actions.cast_spell('e')
+            time.sleep(1)
+            count += 1
+        
+        Actions.cast_spell('b')
+        
+        time.sleep(9)
+        
+        Actions.purchase_recommend()
+        
+        
