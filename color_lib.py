@@ -1,9 +1,11 @@
 from mss import mss
 from PIL import Image
 from coords import Coords
+from client import Client
 
-class Color_Lib():
+class Color_Lib:
     cached_images = {}
+    image_folder_path = Client.img_path
     
     @staticmethod  
     def get_img(img_path: str):
@@ -87,8 +89,10 @@ class Color_Lib():
     @staticmethod
     def match_color_screen_img(coords, img_path, max_color_diff=5, min_color_diff = -5):
         screen = Color_Lib.get_screen()
+        
         img = Color_Lib.get_img(img_path)
         img_color = Color_Lib.get_pixel_color(coords, img)
+        
         screen_color = Color_Lib.get_pixel_color(coords, screen)
         
         return Color_Lib.fuzzy_color_match(img_color, screen_color)
