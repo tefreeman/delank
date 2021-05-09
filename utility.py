@@ -1,8 +1,6 @@
 import win32api, win32con
-from client import Client
+import datetime
 import time
-import shutil
-import os
 
 class Utility:
     _arrays = {'Yummi_set_attached': [False, False, False], 'Player_set_is_dead': [False, False, False, False, False, False, False, False, False, False]}
@@ -22,7 +20,11 @@ class Utility:
                 f_count += 1
         
         return t_count > f_count
-        
+    
+    @staticmethod
+    def TimestampMillisec64():
+        return int((datetime.datetime.utcnow() - datetime.datetime(1970, 1, 1)).total_seconds() * 1000) 
+
     @staticmethod
     def mouse_move():
         pass

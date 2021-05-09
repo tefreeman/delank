@@ -10,10 +10,10 @@ class Action:
         self.is_blocking = True
     
     def fire(self):
-        if self._can_fire():
+        if self._is_on_cd():
             self.func()
     
-    def _can_fire(self):
+    def _is_on_cd(self):
         if self.cd != -1:
             now = time.time() 
             if now >= self._next_call:

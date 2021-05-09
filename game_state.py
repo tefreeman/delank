@@ -3,7 +3,7 @@ from yummi import Yummi
 from coords import Coords
 from team import Team
 from game_coords import GameCoords
-from color_lib import Color_Lib
+from color_lib import ColorLib
 from PIL import Image
 from mss import mss
 
@@ -50,7 +50,7 @@ class GameState():
              self.__u_is_adc_dead()
     
     def _set_ally_fountain_loc(self):
-        if Color_Lib.match_color_screen(self.img, (GameCoords.bottom_left_base.x, GameCoords.bottom_left_base.y), GameCoords.bottom_left_base.colors[0], 15, -15):
+        if ColorLib.match_color_screen(self.img, (GameCoords.bottom_left_base.x, GameCoords.bottom_left_base.y), GameCoords.bottom_left_base.colors[0], 15, -15):
             self._my_fountain_coords = GameCoords.bottom_fountain
             self._general_enemy_dir_coords = Coords(x=870, y=180)
         else:
@@ -58,28 +58,28 @@ class GameState():
             self._general_enemy_dir_coords = Coords(x=380, y=470)
             
     def __u_yummi_attached(self):
-        self.yummi.set_attached(Color_Lib.fuzzy_color_match_test(self.img, GameCoords.yummi_attached, 10, -10))
+        self.yummi.set_attached(ColorLib.fuzzy_color_match_test(self.img, GameCoords.yummi_attached, 10, -10))
     
     def __u_is_adc_hp_low(self):
         x = GameCoords.health_bars['adc'].x + round( GameCoords.health_bars['adc'].w * self.ally_low_hp)
         y = GameCoords.health_bars['adc'].y+1
         
-        self._is_adc_hp_low = Color_Lib.match_color_screen(self.img, (x, y), GameCoords.health_bars['adc'].colors[0])
+        self._is_adc_hp_low = ColorLib.match_color_screen(self.img, (x, y), GameCoords.health_bars['adc'].colors[0])
     
     def __u_is_adc_hp_critical(self):
         x = GameCoords.health_bars['adc'].x + round( GameCoords.health_bars['adc'].w * self.ally_critical_hp)
         y = GameCoords.health_bars['adc'].y+1
         
-        self._is_adc_hp_critical = Color_Lib.match_color_screen(self.img, (x, y), GameCoords.health_bars['adc'].colors[0])
+        self._is_adc_hp_critical = ColorLib.match_color_screen(self.img, (x, y), GameCoords.health_bars['adc'].colors[0])
     
     def __u_is_adc_dead(self):
-        self._is_adc_dead = Color_Lib.fuzzy_color_match_test(self.img, GameCoords.my_adc_dead_hp_bar, 15, -15)
+        self._is_adc_dead = ColorLib.fuzzy_color_match_test(self.img, GameCoords.my_adc_dead_hp_bar, 15, -15)
         
     def __u_has_game_started(self):
-        self._has_game_started = Color_Lib.match_color_screen(self.img, (GameCoords.has_game_started.x, GameCoords.has_game_started.y), GameCoords.has_game_started.colors[0])
+        self._has_game_started = ColorLib.match_color_screen(self.img, (GameCoords.has_game_started.x, GameCoords.has_game_started.y), GameCoords.has_game_started.colors[0])
 
     def __u_player_is_alive(self):
-         self.yummi.set_is_dead(Color_Lib.fuzzy_color_match_test(self.img, GameCoords.my_champ_dead_team_bar, 15, -15))
+         self.yummi.set_is_dead(ColorLib.fuzzy_color_match_test(self.img, GameCoords.my_champ_dead_team_bar, 15, -15))
         
     def has_game_started(self):
         return self._has_game_started

@@ -2,7 +2,7 @@
 from mss import mss
 from PIL import Image
 from threading import Thread
-from color_lib import Color_Lib
+from color_lib import ColorLib
 from game_state import GameState
 import time
 

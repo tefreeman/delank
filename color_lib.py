@@ -1,19 +1,18 @@
 from mss import mss
 from PIL import Image
 from coords import Coords
-from client import Client
 
-class Color_Lib:
+class ColorLib:
     cached_images = {}
-    image_folder_path = Client.img_path
+
     
     @staticmethod  
     def get_img(img_path: str):
-        if img_path in Color_Lib.cached_images:
-            return Color_Lib.cached_images[img_path]
+        if img_path in ColorLib.cached_images:
+            return ColorLib.cached_images[img_path]
         else:
             img = Image.open(img_path, 'r')
-            Color_Lib.cached_images[img_path] = img
+            ColorLib.cached_images[img_path] = img
             return img
     
     @staticmethod
@@ -56,16 +55,16 @@ class Color_Lib:
         for color in coord.colors:
             if coord.shape == "vline":
                 for i in range(coord.y,  round(coord.y + coord.h/2)):
-                    if Color_Lib.fuzzy_color_match(Color_Lib.get_pixel_color((coord.x, i), screen),color, max_color_dif, min_color_diff):
+                    if ColorLib.fuzzy_color_match(ColorLib.get_pixel_color((coord.x, i), screen),color, max_color_dif, min_color_diff):
                         detections['bottom'] = True           
                     
                 for j in range(coord.y - round(coord.h/2), coord.y):
-                    if Color_Lib.fuzzy_color_match(Color_Lib.get_pixel_color((coord.x, j), screen), color, max_color_dif, min_color_diff):
+                    if ColorLib.fuzzy_color_match(ColorLib.get_pixel_color((coord.x, j), screen), color, max_color_dif, min_color_diff):
                         detections['top'] = True
             
             elif coord.shape == "hline":
                 for i in range(coord.x, round(coord.x + coord.w)):
-                    if Color_Lib.fuzzy_color_match(Color_Lib.get_pixel_color((i, coord.y), screen), color, max_color_dif, min_color_diff):
+                    if ColorLib.fuzzy_color_match(ColorLib.get_pixel_color((i, coord.y), screen), color, max_color_dif, min_color_diff):
                         detections['left'] = True     
         
         if coord.shape == "vline":      
@@ -82,34 +81,34 @@ class Color_Lib:
     def get_vline_color(coords, height, img: Image):
         color_arr = []
         for i in range(0, height):
-            color_arr.append(Color_Lib.get_pixel_color((coords[0], coords[1] + i), img))
+            color_arr.append(ColorLib.get_pixel_color((coords[0], coords[1] + i), img))
         return color_arr
 
     
     @staticmethod
     def match_color_screen_img(coords, img_path, max_color_diff=5, min_color_diff = -5):
-        screen = Color_Lib.get_screen()
+        screen = ColorLib.get_screen()
         
-        img = Color_Lib.get_img(img_path)
-        img_color = Color_Lib.get_pixel_color(coords, img)
+        img = ColorLib.get_img(img_path)
+        img_color = ColorLib.get_pixel_color(coords, img)
         
-        screen_color = Color_Lib.get_pixel_color(coords, screen)
+        screen_color = ColorLib.get_pixel_color(coords, screen)
         
-        return Color_Lib.fuzzy_color_match(img_color, screen_color)
+        return ColorLib.fuzzy_color_match(img_color, screen_color)
 
     @staticmethod
     def match_color_screen(screen, coords, color, max_color_diff=5, min_color_diff = -5):
-        screen_color = Color_Lib.get_pixel_color(coords, screen)
+        screen_color = ColorLib.get_pixel_color(coords, screen)
         
-        return Color_Lib.fuzzy_color_match(color, screen_color)
+        return ColorLib.fuzzy_color_match(color, screen_color)
 
     @staticmethod
     def is_color_in_vline_on_screen(screen, coords, height, color, max_color_diff=5, min_color_diff=-5):
-        screen = Color_Lib.get_screen()
-        vline_colors = Color_Lib.get_vline_color(coords, height, screen)
+        screen = ColorLib.get_screen()
+        vline_colors = ColorLib.get_vline_color(coords, height, screen)
        
         for vline_color in vline_colors:
-           if Color_Lib.fuzzy_color_match(vline_color, color, max_color_diff, min_color_diff):
+           if ColorLib.fuzzy_color_match(vline_color, color, max_color_diff, min_color_diff):
                return True
     
         return False

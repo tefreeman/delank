@@ -1,5 +1,6 @@
 from client import Client
 from play_game import PlayGame
+from input import Mouse
 import keyboard
 import time
 
@@ -13,12 +14,13 @@ def set_stop_flag():
     
 keyboard.add_hotkey('ctrl+s', set_stop_flag, suppress=bool)
 
+Mouse()
+Client()
+
 
 while True:
-    
-    Client.get_into_game("sup", "mid", "yuumi", 30)
+    Client.get_into_game("sup", "mid", "yuumi", 20)
     PlayGame(stop_flag)
     time.sleep(5)
     Client.force_close_league()
     time.sleep(30)
-pp

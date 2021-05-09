@@ -9,10 +9,11 @@ import numpy as np
 import time
 from scipy import interpolate
 import math
+import pytweening
 
 
 class Mouse:
-    _q = queue.LifoQueue()
+    _q = queue.Queue()
     
     SCREEN_WIDTH = win32api.GetSystemMetrics(0)
     SCREEN_HEIGHT = win32api.GetSystemMetrics(1)
@@ -23,7 +24,6 @@ class Mouse:
         Mouse.t = threading.Thread(target=Mouse._worker, daemon=False)
         Mouse.t.start()
         
-    
     @staticmethod
     def _worker():
         while True:
@@ -34,6 +34,8 @@ class Mouse:
                     print(time.time())
                     Mouse._curved_move(item[1], item[2], item[3])
                     print((time.time_ns() // 1_000_000) - ms)
+                elif item[0] is "click":
+                    Mouse._click(item[1])
             Mouse._q.task_done()
             time.sleep(0.01)
     
@@ -48,6 +50,10 @@ class Mouse:
         win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN,0,0)
         sleep(wait)
         win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP,0,0)
+    
+    @staticmethod
+    def get_cursor_pos():
+        return win32api.GetCursorPos()
 
     @staticmethod
     def _click(button):
@@ -62,7 +68,7 @@ class Mouse:
 
     @staticmethod
     def click(button="left"):
-        Mouse._q.put(Mouse._click(button))
+        Mouse._q.put(("click", button))
 
     @staticmethod
     def _move(pt):
@@ -75,6 +81,42 @@ class Mouse:
     @staticmethod
     def _point_dist(x1,y1,x2,y2):
         return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+    
+    @staticmethod
+    def distortPoints(points, distortionMean, distortionStdev, distortionFrequency):
+        """
+        Distorts the curve described by (x,y) points, so that the curve is
+        not ideally smooth.
+        Distortion happens by randomly, according to normal distribution,
+        adding an offset to some of the points.
+        """
+
+        distorted = []
+        for i in range(1, len(points)-1):
+            x,y = points[i]
+            delta = np.random.normal(distortionMean, distortionStdev) if \
+                random.random() < distortionFrequency else 0
+            distorted += (x,y+delta),
+        distorted = [points[0]] + distorted + [points[-1]]
+        return distorted
+    
+    @staticmethod
+    def tweenPoints(points, tween, targetPoints):
+        """
+        Chooses a number of points(targetPoints) from the list(points)
+        according to tweening function(tween).
+        This function in fact controls the velocity of mouse movement
+        """
+        
+        if not isinstance(targetPoints, int) or targetPoints < 2:
+            raise ValueError("targetPoints must be an integer greater or equal to 2")
+
+        # tween is a function that takes a float 0..1 and returns a float 0..1
+        res = []
+        for i in range(targetPoints):
+            index = int(tween(float(i)/(targetPoints-1)) * (len(points)-1))
+            res += points[index],
+        return res 
     
     @staticmethod
     def _curved_move(pt, duration, resolution):
@@ -113,12 +155,21 @@ class Mouse:
 
         # Move mouse.
         timeout = duration / len(points[0])
-        point_list=zip(*(i.astype(int) for i in points))
+        point_list= list(zip(*(i.astype(int) for i in points)))
         
-        for point in point_list:
+        distortPoints = Mouse.distortPoints(point_list, 1, 1, 0.5) 
+        
+        tween = pytweening.easeOutQuad
+        targetPoints = 100
+        
+        tweened_points = Mouse.tweenPoints(distortPoints, tween, targetPoints)
+
+            
+        for point in tweened_points:
             Mouse._move(point)
             time.sleep(timeout)
           
+
 
 
 
