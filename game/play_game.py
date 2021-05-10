@@ -11,13 +11,15 @@ from client import Client
 def PlayGame(stop_flag):
     gs = GameState()
     items = []
-    loop_count = 0
+    loop_count = 1
     ff_time = 0
     first_run = True
     
     s_time = time.time()
+    
     while Client.is_league_game_running():
         gs.update()
+        
         if gs.has_game_started() and not stop_flag['val']:
             if first_run is True:
                 time.sleep(6)
@@ -60,11 +62,14 @@ def PlayGame(stop_flag):
                     Actions.retreat(gs.get_fountain_coords())
             
             if time.time() - s_time > 5:
-                count =+ 1
+                loop_count = loop_count + 1
+                print(loop_count)
                 s_time = time.time()
+                
             
             if loop_count % 3 == 0:
                 if random.randint(0, 1) == 1:
+                    pass
                     Actions.random_mouse_movement()
                     time.sleep(0.15)
                 
@@ -72,12 +77,12 @@ def PlayGame(stop_flag):
                 if random.randint(0, 1) == 1:
                     Actions.level_all_spells('r', 'q', 'w', 'e')
             
-            if loop_count % 12:
+            if loop_count % 12 == 0:
                 if random.randint(0, 1) == 1:
                     Actions.cast_spell('4')
                     Actions.cast_spell('1')
             
-            if loop_count % 20:
+            if loop_count % 20 == 0:
                 if random.randint(0, 1) == 1:
                     Actions.cast_spell('ctrl+4')
             

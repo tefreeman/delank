@@ -29,7 +29,7 @@ class GameState():
         self.yummi = Yummi()
         self.team = Team()
     
-    def debug_print(self):
+    def debug_wwww(self):
         print("has game started: ", self._has_game_started)
         print("is adc low: ", self._is_adc_hp_low)
         print("is adc critcally low: ", self._is_adc_hp_critical)

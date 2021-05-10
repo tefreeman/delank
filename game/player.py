@@ -10,7 +10,6 @@ class Player:
         self.hp = hp
     
     def set_is_dead(self, status: bool):
-        print(status)
         self._is_dead = Utility.denoised_bool(status, "Player_set_is_dead")
         
     def is_dead(self):
