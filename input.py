@@ -10,7 +10,7 @@ import time
 from scipy import interpolate
 import math
 import pytweening
-
+from utility import Utility
 
 class Mouse:
     _q = queue.Queue()
@@ -164,11 +164,16 @@ class Mouse:
         
         tweened_points = Mouse.tweenPoints(distortPoints, tween, targetPoints)
 
-            
+
+        start_time = Utility.TimestampMillisec64()
+        
         for point in tweened_points:
             Mouse._move(point)
             time.sleep(timeout)
+
+            
           
+        
 
 
 

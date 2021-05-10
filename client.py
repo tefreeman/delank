@@ -179,9 +179,9 @@ class Client():
     def start_match_search(pos1, pos2):
         
         Client.ele_play_button.click()
-        time.sleep(5)
+        time.sleep(2)
         Client.ele_game_mode_pvp.click()
-        time.sleep(4)
+        time.sleep(2)
         Client.ele_soloq_mode.click()
         time.sleep(5)
         Client.ele_confirm_play_button.click()

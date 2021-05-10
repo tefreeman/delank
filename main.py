@@ -18,9 +18,12 @@ Mouse()
 Client()
 
 
+
+'''
 while True:
-    Client.get_into_game("sup", "mid", "yuumi", 20)
+    #pClient.get_into_game("sup", "mid", "yuumi", 20)
     PlayGame(stop_flag)
     time.sleep(5)
     Client.force_close_league()
     time.sleep(30)
+ '''
