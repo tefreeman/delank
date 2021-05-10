@@ -1,6 +1,7 @@
 from game_coords import GameCoords
 from coords import Coords
 from utility import Utility
+from input import Mouse
 import keyboard
 import time
 import mouse
@@ -23,8 +24,8 @@ class Actions:
         
         if Actions.last_attach + 8 < time.time():
             keyboard.press(key)
-            mouse.move(GameCoords.ally_focus_center.x, GameCoords.ally_focus_center.y)
-            time.sleep(0.05)
+            Mouse.move((GameCoords.ally_focus_center.x, GameCoords.ally_focus_center.y), 0.05)
+            time.sleep(0.160)
             
             keyboard.press_and_release('w')
             
@@ -65,17 +66,17 @@ class Actions:
     @staticmethod    
     def purchase_recommend():
         keyboard.press_and_release('p')
-        mouse.move(GameCoords.shop_tab_recommend.x, GameCoords.shop_tab_recommend.y)
+        Mouse.move((GameCoords.shop_tab_recommend.x, GameCoords.shop_tab_recommend.y))
+        time.sleep(1)
+        Mouse.click()
         time.sleep(0.25)
-        Utility.left_click()
+        Mouse.move((GameCoords.shop_select_recommend.x, GameCoords.shop_select_recommend.y))
+        time.sleep(1)
+        Mouse.click()
         time.sleep(0.25)
-        mouse.move(GameCoords.shop_select_recommend.x, GameCoords.shop_select_recommend.y)
-        time.sleep(0.25)
-        Utility.left_click()
-        time.sleep(0.25)
-        mouse.move(GameCoords.shop_purchase_selected.x, GameCoords.shop_purchase_selected.y)
-        time.sleep(0.25)
-        Utility.left_click()
+        Mouse.move((GameCoords.shop_purchase_selected.x, GameCoords.shop_purchase_selected.y))
+        time.sleep(1)
+        Mouse.click()
         time.sleep(0.25)
         keyboard.press_and_release('p')
         time.sleep(0.25)
@@ -94,10 +95,18 @@ class Actions:
         Actions.type_in_chat(Actions._rand_messages[num])
     
     @staticmethod
+    def random_mouse_movement():
+        x = random.randint(200, 1000)
+        y = random.randint(200, 1000)
+        
+        Mouse.move((x,y), duration=0.1, resolution= 10.0)
+        
+        
+    @staticmethod
     def retreat(coord: Coords):
-        mouse.move(coord.x, coord.y)
+        Mouse.move((coord.x, coord.y), 0.1, 8.0)
         time.sleep(0.1)
-        Utility.left_click()
+        Mouse.click()
         Actions.cast_spell('e')
         time.sleep(0.60)
         Utility.right_click()
@@ -110,7 +119,7 @@ class Actions:
         
         Actions.cast_spell('b')
         
-        time.sleep(9)
+        time.sleep(11)
         
         Actions.purchase_recommend()
         

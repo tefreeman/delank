@@ -18,7 +18,9 @@ def PlayGame(stop_flag):
         
         if gs.has_game_started() and not stop_flag['val']:
             if first_run is True:
-                time.sleep(20)
+                time.sleep(10)
+                Actions.cast_spell('ctrl+4')
+                time.sleep(10)
                 Actions.cast_spell('y')
                 time.sleep(1)
                 Actions.purchase_recommend()
@@ -55,13 +57,21 @@ def PlayGame(stop_flag):
                 if gs.get_fountain_coords() is not None:
                     Actions.retreat(gs.get_fountain_coords())
             
+            if loop_count % 10 == 0:
+                Actions.random_mouse_movement()
+                time.sleep(0.20)
                 
-            if loop_count > 50:
+            if loop_count % 20 == 0:
                 Actions.level_all_spells('r', 'q', 'w', 'e')
+            
+            if loop_count == 40:
+                Actions.cast_spell('4')
+                Actions.cast_spell('1')
                 loop_count = 0
-                
+            
+            if random.randint(0, 50):
+                Actions.cast_spell('ctrl+4')
             loop_count += 1
-            print(loop_count)
             time.sleep(0.04)
 
     

@@ -30,10 +30,7 @@ class Mouse:
             item = Mouse._q.get()
             if item is not None:
                 if item[0] is "move":
-                    ms = time.time_ns() // 1_000_000 
-                    print(time.time())
                     Mouse._curved_move(item[1], item[2], item[3])
-                    print((time.time_ns() // 1_000_000) - ms)
                 elif item[0] is "click":
                     Mouse._click(item[1])
             Mouse._q.task_done()
@@ -75,7 +72,7 @@ class Mouse:
         win32api.mouse_event(win32con.MOUSEEVENTF_MOVE | win32con.MOUSEEVENTF_ABSOLUTE, int(pt[0]/Mouse.SCREEN_WIDTH*65535.0), int(pt[1]/Mouse.SCREEN_HEIGHT*65535.0))
     
     @staticmethod
-    def move(pt, duration = 0.5, resolution = 8.0):
+    def move(pt, duration = 0.5, resolution = 4.0):
         Mouse._q.put(("move", pt, duration, resolution))
          
     @staticmethod
@@ -149,7 +146,7 @@ class Mouse:
         tck, u = interpolate.splprep([x, y], k=degree)
         
         # Move upto a certain number of points
-        u = np.linspace(0, 1, num=2+int(Mouse._point_dist(x1,y1,x2,y2)/ resolution))
+        u = np.linspace(0, 1, num=2+int(Mouse._point_dist(x1,y1,x2,y2) / resolution))
         
         points = interpolate.splev(u, tck)
 
@@ -160,7 +157,8 @@ class Mouse:
         distortPoints = Mouse.distortPoints(point_list, 1, 1, 0.5) 
         
         tween = pytweening.easeOutQuad
-        targetPoints = 100
+        
+        targetPoints = len(distortPoints)
         
         tweened_points = Mouse.tweenPoints(distortPoints, tween, targetPoints)
 

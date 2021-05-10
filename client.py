@@ -22,6 +22,22 @@ class Client():
         "sup": Coords(x=460, y=384)
     }
     
+    
+    ele_role_pos_1 = {
+        "top": Box((300, 384), w=8, h=8),
+        "jg": Box((323, 327), w=8, h=8),
+        "mid": Box((379, 303), w=8, h=8),
+        "adc": Box((435, 327), w=8, h=8),
+        "sup": Box((460, 384), w=8, h=8)
+    }
+    
+    ele_role_pos_2 = {
+        "top": Box((300 + 74, 384),w=8, h=8),
+        "jg": Box((323 + 74, 327),w=8, h=8),
+        "mid": Box((379 + 74, 303),w=8, h=8),
+        "adc": Box((435 + 74, 327),w=8, h=8),
+        "sup": Box((460 + 74, 384),w=8, h=8)
+    }
     role_2_x_offset = 74
     
     pos_messages_dismiss = {
@@ -38,12 +54,13 @@ class Client():
     
     ele_find_match = Box((368,535), w=115, h=26)
     
-    ele_accept_match_button = Box((438,428), w=135, h=28, detection=PointDetection(x=506,y=428, img="v2/client_find_match_ready.png"))
+    ele_accept_match_button = Box((438,428), w=135, h=28, detection=PointDetection(x=506,y=428, img="v2/client_accept_match.png"))
     
     detection_my_pick = PointDetection(x=384,y=2, img="v2/client_choose_champ.png")
     
     ele_lobby_champ_search = Box((580, 74), w=157, h=19)
     ele_lobby_first_champ = Box((276,106), w=52, h=52)
+    
     ele_lobby_lock_in = Box((450, 471), w=111, h=26)
     
     
@@ -172,7 +189,7 @@ class Client():
         Client.ele_lobby_first_champ.click()
         time.sleep(3)
         
-        Client.lock_in_button.click()
+        Client.ele_lobby_lock_in.click()
         time.sleep(3)
         
     @staticmethod
@@ -183,24 +200,19 @@ class Client():
         Client.ele_game_mode_pvp.click()
         time.sleep(2)
         Client.ele_soloq_mode.click()
-        time.sleep(5)
+        time.sleep(2)
         Client.ele_confirm_play_button.click()
-        time.sleep(5)
+        time.sleep(2)
         Client.ele_role_1.click()
-        time.sleep(5)
-        
-        mouse.move(Client.role_pos[pos1].x, Client.role_pos[pos1].y)
-        time.sleep(4)
-        mouse.click()
-        time.sleep(5)
-      
-        Client.ele_role_2.click()  
+        time.sleep(2)   
+        Client.ele_role_pos_1[pos1].click()
+        time.sleep(2)  
+           
+        Client.ele_role_2.click()
         time.sleep(2)
         
-        mouse.move(Client.role_pos[pos2].x + Client.role_2_x_offset, Client.role_pos[pos2].y)
-        time.sleep(4)
-        mouse.click()
-        time.sleep(5)
+        Client.ele_role_pos_2[pos2].click()
+        time.sleep(2)
         
         Client.ele_find_match.click()
 
@@ -214,5 +226,3 @@ class Client():
             Client.start_match_search(role1, role2)
             Client.accept_match(max_time_mins, champ)
 
-
-print(FindWindow(0, "none") )

@@ -6,7 +6,7 @@ import time
 time.sleep(1)
 
 Mouse()
-tries = 10
+tries = 3
 
 for x in range(0, tries):
     pt = (random.randint(400,1280), random.randint(400,720))

@@ -38,7 +38,6 @@ class PointDetection(Detection):
         Detection.__init__(self, x, y, img)
 
     def is_detected(self):
-        print(self.img)
         return ColorLib.match_color_screen_img(self.pt, self.img)
     
         
@@ -89,7 +88,6 @@ class Element:
             
             in_accuracy = abs(pos[0] - pt[0]) + abs(pos[1] - pt[1])
             
-            print(in_accuracy)
 
         return True
     
