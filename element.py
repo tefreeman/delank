@@ -4,7 +4,7 @@ from color_lib import ColorLib
 from utility import Utility
 import time
 import os
-
+from win32api import GetSystemMetrics
 class Detection:
     main_dir = os.path.dirname(__file__)
     img_path = os.path.join(main_dir, "images\\")
@@ -53,16 +53,24 @@ class Element:
             self._detection = Detection(0,0, "")
         
     
-    def get_random_pt(self):
-        pass
+    def get_random_pt_on(self):
+        raise NotImplementedError("Must override get_random_pt")
     
-    def click(self, timeout=20):
+    def get_random_pt_off(self):
+        raise NotImplementedError("Must override get_random_pt")
+    
+    def is_mouse_over(self):
+        raise NotImplementedError("Must override get_random_pt")
+    
+    def move_mouse_off(self):
+        raise NotImplementedError("Must override get_random_pt")
+    def click(self, timeout=10):
         
         result = False
         
         while not result:
             
-            pt = self.get_random_pt()
+            pt = self.get_random_pt_on()
         
             Mouse.move(pt)
         
@@ -94,8 +102,12 @@ class Element:
     
     def wait_till_detected(self, fps, max_wait):
         return self._detection.wait_for_detection(fps, max_wait)
-        
+    
+    
     def is_detected(self):
+        if self.is_mouse_over():
+            self.move_mouse_off()
+            time.sleep(0.25)
         return self._detection.is_detected()
     
 
@@ -106,8 +118,50 @@ class Box(Element):
         self.w = w
         self.h = h
         
-    def get_random_pt(self):
+    def get_random_pt_on(self):
         x = random.randint(self.pt[0] + Element.margin, self.pt[0] + self.w - Element.margin)
         y = random.randint(self.pt[1] + Element.margin, self.pt[1] + self.h - Element.margin)   
         return x,y
+
+    def get_random_pt_off(self):
+        mid_x = self.pt[0] + int(self.w/2)
+        mid_y = self.pt[1] + int(self.h/2)
+        
+        screen_w = GetSystemMetrics(0)
+        screen_h = GetSystemMetrics(1)
+        
+        #left side
+        x = 0
+        y = 0
+        
+        if screen_w - mid_x > screen_w/2:
+            x = random.randint(self.pt[0] + self.w + self.margin, screen_w)
+        else: 
+            x = random.randint(0, self.pt[0] - self.margin)
+
+        
+        if screen_h - mid_y > screen_h/2:
+            y = random.randint(self.pt[1] + self.margin, screen_h)
+        else:
+            y = random.randint(0, self.pt[1] - self.margin)
+            
+        return x,y
+        
     
+    def move_mouse_off(self, timeout=10):
+        result = False
+        
+        while not result:
+            
+            pt = self.get_random_pt_off()
+        
+            Mouse.move(pt)
+        
+            result = self.wait_till_reached(pt, timeout)
+        
+
+    def is_mouse_over(self):
+        c_pos = Mouse.get_cursor_pos()
+        
+        return c_pos[0] >= self.pt[0] - self.margin and c_pos[0] < self.pt[0] + self.w + self.margin\
+        and c_pos[1] >= self.pt[1] - self.margin and c_pos[1] < self.pt[1] + self.h + self.margin

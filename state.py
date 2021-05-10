@@ -1,0 +1,2 @@
+class state:
+    pass

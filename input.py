@@ -10,7 +10,6 @@ import time
 from scipy import interpolate
 import math
 import pytweening
-from utility import Utility
 
 class Mouse:
     _q = queue.Queue()
@@ -145,13 +144,23 @@ class Mouse:
                                         # Must be less than number of control points.
         tck, u = interpolate.splprep([x, y], k=degree)
         
+        # Max size for accurate sleep for windows 60fps accuracy
+        max_size = int(duration / (1/60))
+        
         # Move upto a certain number of points
-        u = np.linspace(0, 1, num=2+int(Mouse._point_dist(x1,y1,x2,y2) / resolution))
+        size = int(Mouse._point_dist(x1,y1,x2,y2) / resolution)
+        #old u = np.linspace(0, 1, num=2+int(Mouse._point_dist(x1,y1,x2,y2) / resolution))
+        
+        if size > max_size:
+            size = max_size
+        
+        u = np.linspace(0, 1, num=2+int(size))
         
         points = interpolate.splev(u, tck)
 
         # Move mouse.
         timeout = duration / len(points[0])
+        
         point_list= list(zip(*(i.astype(int) for i in points)))
         
         distortPoints = Mouse.distortPoints(point_list, 1, 1, 0.5) 
@@ -163,8 +172,6 @@ class Mouse:
         tweened_points = Mouse.tweenPoints(distortPoints, tween, targetPoints)
 
 
-        start_time = Utility.TimestampMillisec64()
-        
         for point in tweened_points:
             Mouse._move(point)
             time.sleep(timeout)

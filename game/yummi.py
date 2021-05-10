@@ -1,4 +1,4 @@
-from player import Player
+from game.player import Player
 from utility import Utility
 
 class Yummi(Player):

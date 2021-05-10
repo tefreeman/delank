@@ -1,7 +1,8 @@
-from game_coords import GameCoords
+from game.game_coords import GameCoords
 from coords import Coords
 from utility import Utility
 from input import Mouse
+from game.game_elements import GameElements
 import keyboard
 import time
 import mouse
@@ -101,11 +102,35 @@ class Actions:
         
         Mouse.move((x,y), duration=0.1, resolution= 10.0)
         
+    
+    @staticmethod
+    def try_buy_item(item_str: str):
+        keyboard.press_and_release('p')
+        time.sleep(0.50)
+        keyboard.press_and_release('ctrl+l')
+        time.sleep(0.50)
+        keyboard.write(item_str, 0.01)
+        time.sleep(0.30)
+        GameElements.item_result_pos.click()
+        time.sleep(0.30)
+        
+        result = GameElements.item_buy_button_pos.is_detected()
+        
+        if result == True:
+            GameElements.item_buy_button_pos.click()
+            time.sleep(0.30)
+        
+        keyboard.press_and_release('p')
+        return result
+            
+        
+        
+        
         
     @staticmethod
     def retreat(coord: Coords):
         Mouse.move((coord.x, coord.y), 0.1, 8.0)
-        time.sleep(0.1)
+        time.sleep(0.20)
         Mouse.click()
         Actions.cast_spell('e')
         time.sleep(0.60)

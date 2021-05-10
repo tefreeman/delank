@@ -2,7 +2,7 @@ import time
 from color_lib import ColorLib
 import keyboard
 import mouse
-from game_state import GameState
+from game.game_state import GameState
 from action_system import ActionSystem
 from actions import Actions
 import random
@@ -10,17 +10,19 @@ from client import Client
 
 def PlayGame(stop_flag):
     gs = GameState()
+    items = []
     loop_count = 0
     ff_time = 0
     first_run = True
+    
+    s_time = time.time()
     while Client.is_league_game_running():
         gs.update()
-        
         if gs.has_game_started() and not stop_flag['val']:
             if first_run is True:
-                time.sleep(10)
+                time.sleep(6)
                 Actions.cast_spell('ctrl+4')
-                time.sleep(10)
+                time.sleep(15)
                 Actions.cast_spell('y')
                 time.sleep(1)
                 Actions.purchase_recommend()
@@ -57,21 +59,28 @@ def PlayGame(stop_flag):
                 if gs.get_fountain_coords() is not None:
                     Actions.retreat(gs.get_fountain_coords())
             
-            if loop_count % 10 == 0:
-                Actions.random_mouse_movement()
-                time.sleep(0.20)
+            if time.time() - s_time > 5:
+                count =+ 1
+                s_time = time.time()
+            
+            if loop_count % 3 == 0:
+                if random.randint(0, 1) == 1:
+                    Actions.random_mouse_movement()
+                    time.sleep(0.15)
                 
-            if loop_count % 20 == 0:
-                Actions.level_all_spells('r', 'q', 'w', 'e')
+            if loop_count % 4 == 0:
+                if random.randint(0, 1) == 1:
+                    Actions.level_all_spells('r', 'q', 'w', 'e')
             
-            if loop_count == 40:
-                Actions.cast_spell('4')
-                Actions.cast_spell('1')
-                loop_count = 0
+            if loop_count % 12:
+                if random.randint(0, 1) == 1:
+                    Actions.cast_spell('4')
+                    Actions.cast_spell('1')
             
-            if random.randint(0, 50):
-                Actions.cast_spell('ctrl+4')
-            loop_count += 1
+            if loop_count % 20:
+                if random.randint(0, 1) == 1:
+                    Actions.cast_spell('ctrl+4')
+            
             time.sleep(0.04)
 
     

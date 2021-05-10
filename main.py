@@ -1,5 +1,5 @@
 from client import Client
-from play_game import PlayGame
+from game.play_game import PlayGame
 from input import Mouse
 import keyboard
 import time
