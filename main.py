@@ -21,7 +21,7 @@ Client()
 
 
 while True:
-    Client.get_into_game("sup", "mid", "yuumi", 25)
+    Client.get_into_game("sup", "mid", "yuumi", 30)
     PlayGame(stop_flag)
     time.sleep(5)
     Client.force_close_league()
