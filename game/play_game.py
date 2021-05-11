@@ -63,7 +63,6 @@ def PlayGame(stop_flag):
             
             if time.time() - s_time > 5:
                 loop_count = loop_count + 1
-                print(loop_count)
                 s_time = time.time()
                 
             

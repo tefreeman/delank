@@ -75,7 +75,10 @@ class Mouse:
     
     @staticmethod
     def move(pt, duration = 0.5, resolution = 4.0):
-        Mouse._q.put(("move", pt, duration, resolution))
+        if pt[0] >= 0 and pt[1] >= 0 and pt[0] <= 1280 and pt[1] <= 720:
+            Mouse._q.put(("move", pt, duration, resolution))
+        else:
+            print('invaild move command')
          
     @staticmethod
     def _point_dist(x1,y1,x2,y2):

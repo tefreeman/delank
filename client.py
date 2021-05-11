@@ -225,7 +225,7 @@ class Client():
         if not Client.is_league_game_running():
             Client.open_ready_client(32)
             time.sleep(1)
-            Configs.replace_configs()
+            #Configs.replace_configs()
             Client.start_match_search(role1, role2)
             Client.accept_match(max_time_mins, champ)
 

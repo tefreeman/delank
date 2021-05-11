@@ -1,9 +1,8 @@
-from client import Client
 import os, shutil
 
 class Configs:
-    new_config_dir = Client.main_dir + '\\league_configs\\new\\'
-    saved_config_dir = Client.main_dir + '\\league_configs\\saved\\'
+    new_config_dir =  os.path.dirname(__file__) + '\\league_configs\\new\\'
+    saved_config_dir =  os.path.dirname(__file__) + '\\league_configs\\saved\\'
     l_config_dir = "C:\\Riot Games\\League of Legends\\Config\\"
     
     @staticmethod
