@@ -98,7 +98,7 @@ class Actions:
     @staticmethod
     def random_mouse_movement():
         x = random.randint(200, 1000)
-        y = random.randint(200, 1000)
+        y = random.randint(100, 620)
         
         Mouse.move((x,y), duration=0.1, resolution= 10.0)
         
@@ -129,8 +129,8 @@ class Actions:
         
     @staticmethod
     def retreat(coord: Coords):
-        Mouse.move((coord.x, coord.y), 0.1, 8.0)
-        time.sleep(0.20)
+        Mouse.move((coord.x, coord.y), 0.15, 8.0)
+        time.sleep(0.40)
         Mouse.click()
         Actions.cast_spell('e')
         time.sleep(0.60)
