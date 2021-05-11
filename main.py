@@ -3,7 +3,7 @@ from game.play_game import PlayGame
 from input import Mouse
 import keyboard
 import time
-
+from configs import Configs
 
 
 stop_flag = {'val': False}
@@ -22,6 +22,8 @@ Client()
 
 while True:
     Client.get_into_game("sup", "mid", "yuumi", 30)
+    time.sleep(5)
+    Configs.restore_configs()
     PlayGame(stop_flag)
     time.sleep(5)
     Client.force_close_league()

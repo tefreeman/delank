@@ -15,9 +15,9 @@ class GameCoords:
     top_fountain = Coords(x=190, y=530)
     
     
-    shop_select_recommend = Coords(x=312, y=344)
-    shop_purchase_selected = Coords(x=780, y=560)
-    shop_tab_recommend = Coords(x=290, y=100)
+    shop_select_recommend = Coords(x=270, y=320)
+    shop_purchase_selected = Coords(x=708, y=576)
+    shop_tab_recommend = Coords(x=230, y=132)
     bl_fountain_minimap_camera_box = Coords(x=33, y=686, h=8, w=2, colors = [(255,255,255)], shape="vline")
     health_bars = {
         'top': Coords(),

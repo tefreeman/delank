@@ -374,15 +374,15 @@
                         },
                         {
                             "name": "ItemShopPrevResizeHeight",
-                            "value": "1080"
+                            "value": "720"
                         },
                         {
                             "name": "ItemShopPrevResizeWidth",
-                            "value": "1920"
+                            "value": "1280"
                         },
                         {
                             "name": "ItemShopPrevX",
-                            "value": "885"
+                            "value": "0"
                         },
                         {
                             "name": "ItemShopPrevY",
@@ -458,7 +458,7 @@
                         },
                         {
                             "name": "ShopScale",
-                            "value": "0.4444"
+                            "value": "0.40"
                         },
                         {
                             "name": "ShowAllChannelChat",
@@ -559,11 +559,11 @@
                         },
                         {
                             "name": "NativeOffsetX",
-                            "value": "0.0281"
+                            "value": "0.0"
                         },
                         {
                             "name": "NativeOffsetY",
-                            "value": "-0.0444"
+                            "value": "0.0"
                         }
                     ]
                 },
