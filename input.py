@@ -26,14 +26,17 @@ class Mouse:
     @staticmethod
     def _worker():
         while True:
-            item = Mouse._q.get()
-            if item is not None:
-                if item[0] is "move":
-                    Mouse._curved_move(item[1], item[2], item[3])
-                elif item[0] is "click":
-                    Mouse._click(item[1])
-            Mouse._q.task_done()
-            time.sleep(0.01)
+            try:
+                item = Mouse._q.get()
+                if item is not None:
+                    if item[0] is "move":
+                        Mouse._curved_move(item[1], item[2], item[3])
+                    elif item[0] is "click":
+                        Mouse._click(item[1])
+                Mouse._q.task_done()
+                time.sleep(0.01)
+            except:
+                pass
     
     @staticmethod
     def _left_click(wait = 0):
