@@ -21,11 +21,12 @@ Client()
 
 
 while True:
-    Client.get_into_game("sup", "mid", "yuumi", 30)
+    Client.get_into_game("sup", "mid", "yuumi", 35)
     time.sleep(5)
-    #Configs.restore_configs()
     PlayGame(stop_flag)
     time.sleep(5)
     Client.force_close_league()
-    time.sleep(30)
+    time.sleep(10)
+    Configs.restore_configs()
+    time.sleep(15)
  

@@ -35,8 +35,8 @@ class Mouse:
                         Mouse._click(item[1])
                 Mouse._q.task_done()
                 time.sleep(0.01)
-            except:
-                pass
+            except Exception as e:
+                print(e)
     
     @staticmethod
     def _left_click(wait = 0):

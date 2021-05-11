@@ -16,6 +16,7 @@ def PlayGame(stop_flag):
     first_run = True
     
     s_time = time.time()
+    increase_loop_dur = random.randint(3,7)
     
     while Client.is_league_game_running():
         gs.update()
@@ -61,8 +62,10 @@ def PlayGame(stop_flag):
                 if gs.get_fountain_coords() is not None:
                     Actions.retreat(gs.get_fountain_coords())
             
-            if time.time() - s_time > 5:
+            if time.time() - s_time > increase_loop_dur:
                 loop_count = loop_count + 1
+                
+                increase_loop_dur = random.randint(3,7)
                 s_time = time.time()
                 
             
@@ -76,14 +79,16 @@ def PlayGame(stop_flag):
                 if random.randint(0, 1) == 1:
                     Actions.level_all_spells('r', 'q', 'w', 'e')
             
-            if loop_count % 12 == 0:
+            if loop_count % 15 == 0:
                 if random.randint(0, 1) == 1:
-                    Actions.cast_spell('4')
-                    Actions.cast_spell('1')
+                    if gs.is_yummi_attached():
+                        Actions.cast_spell('4')
+                        Actions.cast_spell('1')
             
-            if loop_count % 20 == 0:
+            if loop_count % 15 == 0:
                 if random.randint(0, 1) == 1:
-                    Actions.cast_spell('ctrl+4')
+                    if gs.is_yummi_attached():
+                        Actions.cast_spell('ctrl+4')
             
             time.sleep(0.04)
 

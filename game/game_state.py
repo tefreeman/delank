@@ -21,7 +21,6 @@ class GameState():
         self._is_adc_hp_low = False
         self._is_adc_hp_critical = False
         self._is_adc_dead = False
-        
         #self._is_in_fountain = False
         #self_is_camera_locked = False
         
@@ -80,7 +79,10 @@ class GameState():
 
     def __u_player_is_alive(self):
          self.yummi.set_is_dead(ColorLib.fuzzy_color_match_test(self.img, GameCoords.my_champ_dead_team_bar, 15, -15))
-        
+    
+    def __u_am_i_in_fountain(self):
+        pass
+    
     def has_game_started(self):
         return self._has_game_started
     
