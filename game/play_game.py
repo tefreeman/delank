@@ -11,7 +11,7 @@ from action import Action
 
 
 
-def PlayGame(stop_flag):
+def PlayGame(stop_flag, attach_target):
     gs = GameState()
     items = ["spellthief's edge", "Tear of the Goddess",  "kindlegem", "amplifying Tome", "amplifying Tome", "Blasting Wand", "EverFrost"]
     loop_count = 1
@@ -52,7 +52,7 @@ def PlayGame(stop_flag):
                         time.sleep(0.01)
                         Actions.cast_spell('q')
                 else:
-                    Actions.yummi_attach('f4')
+                    Actions.yummi_attach(attach_target['val'])
                     
             if gs.is_i_dead():
                 Actions.purchase_recommend()

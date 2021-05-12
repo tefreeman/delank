@@ -69,7 +69,7 @@ class Actions:
             count += 1
         
     @staticmethod
-    def dettach_attach(for_time = 5):
+    def dettach_attack(for_time = 5):
         pass
     
     @staticmethod
