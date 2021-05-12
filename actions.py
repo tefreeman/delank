@@ -59,14 +59,17 @@ class Actions:
         elif side is 'bot':
             loc = (155, 624)
         
-        Mouse.move(loc, 0.15)
-        
-        time.sleep(0.5)
-        count += 1
-        while count < 45:
-            Mouse.click()
-            time.sleep(1)
-            count += 1
+        if loc not None:
+            Mouse.move(loc, 0.15)
+            
+            time.sleep(0.5)
+            count = 0
+            while count < 45:
+                Mouse.click()
+                time.sleep(1)
+                count += 1
+        else: 
+            print('loc is none')
         
     @staticmethod
     def dettach_attack(for_time = 5):

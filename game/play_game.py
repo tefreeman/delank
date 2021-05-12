@@ -34,6 +34,8 @@ def PlayGame(stop_flag, attach_target):
                 first_run = False
                 ff_time = time.time() + 60*15
                 Actions.action_troll_ward(gs.get_my_team_side())
+            
+            
             if time.time() > ff_time: 
                 Actions.type_in_chat("/ff")
                 ff_time += 60
