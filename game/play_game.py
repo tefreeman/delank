@@ -7,10 +7,13 @@ from action_system import ActionSystem
 from actions import Actions
 import random
 from client import Client
+from action import Action
+
+
 
 def PlayGame(stop_flag):
     gs = GameState()
-    items = []
+    items = ["spellthief's edge", "Tear of the Goddess",  "kindlegem", "amplifying Tome", "amplifying Tome", "Blasting Wand", "EverFrost"]
     loop_count = 1
     ff_time = 0
     first_run = True
@@ -23,15 +26,14 @@ def PlayGame(stop_flag):
         
         if gs.has_game_started() and not stop_flag['val']:
             if first_run is True:
-                time.sleep(6)
+                time.sleep(1)
                 Actions.cast_spell('ctrl+4')
-                time.sleep(15)
                 Actions.cast_spell('y')
                 time.sleep(1)
                 Actions.purchase_recommend()
                 first_run = False
                 ff_time = time.time() + 60*15
-            
+                Actions.action_troll_ward(gs.get_my_team_side())
             if time.time() > ff_time: 
                 Actions.type_in_chat("/ff")
                 ff_time += 60

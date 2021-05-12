@@ -48,7 +48,30 @@ class Actions:
                 Actions._cast_cds[key]['wait_time'] = time.time() + Actions._cast_cds[key]['cd']
         else:
             keyboard.press_and_release(key)
+    
+    @staticmethod
+    def action_troll_ward(side: str):
+        loc = None
+
+        if side is 'top':
+            loc = (108, 646)
+
+        elif side is 'bot':
+            loc = (155, 624)
         
+        Mouse.move(loc, 0.15)
+        
+        time.sleep(0.5)
+        count += 1
+        while count < 45:
+            Mouse.click()
+            time.sleep(1)
+            count += 1
+        
+    @staticmethod
+    def dettach_attach(for_time = 5):
+        pass
+    
     @staticmethod
     def level_all_spells(s1, s2, s3, s4):
         keyboard.press_and_release('ctrl+' + s1)

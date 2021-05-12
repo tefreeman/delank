@@ -15,6 +15,7 @@ class GameState():
         self.ally_critical_hp = 0.25
         
         self._my_fountain_coords = None
+        self._my_team_side = None
         self._general_enemy_dir_coords = None
         self._has_game_started = False
         self._is_in_fountain = True
@@ -28,7 +29,7 @@ class GameState():
         self.yummi = Yummi()
         self.team = Team()
     
-    def debug_wwww(self):
+    def debug(self):
         print("has game started: ", self._has_game_started)
         print("is adc low: ", self._is_adc_hp_low)
         print("is adc critcally low: ", self._is_adc_hp_critical)
@@ -51,9 +52,11 @@ class GameState():
     def _set_ally_fountain_loc(self):
         if ColorLib.match_color_screen(self.img, (GameCoords.bottom_left_base.x, GameCoords.bottom_left_base.y), GameCoords.bottom_left_base.colors[0], 15, -15):
             self._my_fountain_coords = GameCoords.bottom_fountain
+            self._my_team_side = 'bot'
             self._general_enemy_dir_coords = Coords(x=870, y=180)
         else:
             self._my_fountain_coords = GameCoords.top_fountain
+            self._my_team_side = 'top'
             self._general_enemy_dir_coords = Coords(x=380, y=470)
             
     def __u_yummi_attached(self):
@@ -107,6 +110,9 @@ class GameState():
     def get_fountain_coords(self):
         return self._my_fountain_coords
 
+    def get_my_team_side(self):
+        return self._my_team_side
+    
     def update(self):
         with mss() as sct:
             monitor = sct.monitors[1]
