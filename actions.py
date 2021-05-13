@@ -155,12 +155,16 @@ class Actions:
         
     @staticmethod
     def retreat(coord: Coords):
+        time.sleep(0.25)
+        Mouse.click()
+        time.sleep(0.15)
         Mouse.move((coord.x, coord.y), 0.15, 8.0)
         time.sleep(0.40)
         Mouse.click()
         Actions.cast_spell('e')
         time.sleep(2.5)
         Utility.right_click()
+        
         count = 0
         
         while count < 10:
