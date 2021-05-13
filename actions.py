@@ -59,7 +59,7 @@ class Actions:
         elif side is 'bot':
             loc = (155, 624)
         
-        if loc not None:
+        if loc is not None:
             Mouse.move(loc, 0.15)
             
             time.sleep(0.5)
@@ -159,7 +159,7 @@ class Actions:
         time.sleep(0.40)
         Mouse.click()
         Actions.cast_spell('e')
-        time.sleep(0.60)
+        time.sleep(2.5)
         Utility.right_click()
         count = 0
         

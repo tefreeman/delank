@@ -1,5 +1,4 @@
 import time
-from color_lib import ColorLib
 import keyboard
 import mouse
 from game.game_state import GameState
@@ -20,6 +19,8 @@ def PlayGame(stop_flag, attach_target):
     
     s_time = time.time()
     increase_loop_dur = random.randint(3,7)
+    
+
     
     while Client.is_league_game_running():
         gs.update()

@@ -26,14 +26,13 @@ Client()
 
 
 
-attac
 while True:
-    Client.get_into_game("sup", "mid", "yuumi", 35)
+    Client.get_into_game("sup", "mid", "yuumi", 20)
     time.sleep(5)
     PlayGame(stop_flag, attach_target)
     time.sleep(5)
     Client.force_close_league()
     time.sleep(10)
-    Configs.restore_configs()
+    #Configs.restore_configs()
     time.sleep(15)
  

@@ -13,7 +13,7 @@ class GameState():
         
         self.ally_low_hp = 0.75
         self.ally_critical_hp = 0.25
-        
+        self._my_loc = (-1,-1)
         self._my_fountain_coords = None
         self._my_team_side = None
         self._general_enemy_dir_coords = None
@@ -48,6 +48,9 @@ class GameState():
              self.__u_is_adc_hp_critical()
              self.__u_player_is_alive()
              self.__u_is_adc_dead()
+             self.__u_my_loc()
+             
+             print(self._my_loc)
     
     def _set_ally_fountain_loc(self):
         if ColorLib.match_color_screen(self.img, (GameCoords.bottom_left_base.x, GameCoords.bottom_left_base.y), GameCoords.bottom_left_base.colors[0], 15, -15):
@@ -85,6 +88,12 @@ class GameState():
     
     def __u_am_i_in_fountain(self):
         pass
+    
+    def __u_my_loc(self):
+        self._my_loc = ColorLib.minimap_to_coord(self.img, None)
+    
+    def get_my_loc(self):
+        return self._my_loc
     
     def has_game_started(self):
         return self._has_game_started

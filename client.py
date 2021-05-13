@@ -192,7 +192,7 @@ class Client():
         time.sleep(3)
         
         Client.ele_lobby_lock_in.click()
-        time.sleep(3)
+        time.sleep(1)
         
     @staticmethod
     def start_match_search(pos1, pos2):
