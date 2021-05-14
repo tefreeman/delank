@@ -64,7 +64,7 @@ class Actions:
             
             time.sleep(0.5)
             count = 0
-            while count < 45:
+            while count < 180:
                 Mouse.click()
                 time.sleep(1)
                 count += 1

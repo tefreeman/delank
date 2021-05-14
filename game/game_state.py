@@ -48,7 +48,7 @@ class GameState():
              self.__u_is_adc_hp_critical()
              self.__u_player_is_alive()
              self.__u_is_adc_dead()
-             self.__u_my_loc()
+             #self.__u_my_loc()
              
              print(self._my_loc)
     
